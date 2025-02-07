@@ -17,17 +17,98 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 84px;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  padding: 0 100px;
 }
 
 .navbar-list {
   display: flex;
   font-size: 14px;
 }
+
 .navbar-item {
   padding: 0 16px;
 }
 
+.navbar-link {
+  padding-bottom: 4px;
+  color: lightgrey;
+  transition: color 0.3s ease-in-out;
+}
+
+.navbar-link:hover {
+  color: white;
+}
+
+.navbar-link.active {
+  border-bottom: 2px solid white;
+  color: white;
+}
+
 .sign-in-btn {
-  padding: 0 16px;
+  display: flex;
   font-size: 14px;
+  padding: 4px 8px;
+  margin: 0 16px;
+  align-items: center;
+  border: 1px solid lightgray;
+  border-radius: 20px;
+}
+
+.sign-in-icon {
+  margin-right: 8px;
+}
+
+/* Home Page */
+.homepage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
+}
+
+.homepage-title {
+  font-size: 100px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.letter {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+.homepage-subtitle {
+  color: lightgrey;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Games Page */
+.gamespage {
+  padding-top: 84px;
+}
+
+/* Assets Page */
+.assetspage {
+  padding-top: 84px;
 }

@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react"
 
 const Games = () => {
-  return (
-    <div>Games</div>
-  )
+  return <div className="gamespage">Games</div>
 }
 
 export default Games
