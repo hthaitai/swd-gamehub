@@ -1,9 +1,22 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import HomePage from "./pages/HomePage"
+import Games from "./pages/Games"
+import Assets from "./pages/Assets"
+import Layout from "./pages/Layout"
+import "./css/styles.css"
+
 function App() {
   return (
-    <div className="flex items-center justify-center h-screen">
-      <h1 className="text-3xl font-bold ">Hello world</h1>
-    </div>
-  );
+    <Router>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="/games" element={<Games />} />
+          <Route path="/assets" element={<Assets />} />
+        </Route>
+      </Routes>
+    </Router>
+  )
 }
 
-export default App;
+export default App

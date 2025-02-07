@@ -1,0 +1,33 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+/* Navbar */
+.logo {
+  padding: 16px;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 84px;
+}
+
+.navbar-list {
+  display: flex;
+  font-size: 14px;
+}
+.navbar-item {
+  padding: 0 16px;
+}
+
+.sign-in-btn {
+  padding: 0 16px;
+  font-size: 14px;
+}
