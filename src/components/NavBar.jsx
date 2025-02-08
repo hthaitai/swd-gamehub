@@ -4,7 +4,7 @@ import { CircleUserRound } from "lucide-react"
 
 const NavBar = () => {
   return (
-    <nav className="navbar">
+    <nav className="navbar bg-opacity-50 bg-black">
       <h1 className="logo">
         <span className="bold">Game</span> | Hub
       </h1>
