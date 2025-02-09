@@ -50,10 +50,13 @@ const HomePage = () => {
         </p>
       </header>
       <body>
+
         <div className="container-game animate-scroll" id="gamelist">
-          <div className="game-list-button-wrapper">
+        <h1 className="top-game-title ">Popular Games</h1>
+
+        <div className="game-list-button-wrapper">
             <button className="game-list-button">
-              <Link to="/games" className="flex items-center gap-3">
+              <Link to="/games" className=" items-center gap-3">
                 <span>View all games</span>{" "}
                 <i className="fa-solid fa-chevron-right"></i>
               </Link>

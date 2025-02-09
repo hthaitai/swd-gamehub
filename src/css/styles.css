@@ -79,15 +79,22 @@ html {
   font-weight: bold;
 }
 /* Games */
-
+.top-game-title {
+  margin-top: 15px;
+  top: 0;
+  font-weight: 800;
+  font-size: 3rem;
+  position: absolute;
+}
 .game-list-button {
+  color: gray;
+  margin-top: 40px;
   font-weight: 500;
   font-size: 1.25rem; /* 20px */
   line-height: 1.75rem; /* 28px */
-  padding-left: 20px;
+  padding-right: 20px;
   padding-top: 10px;
   display: inline-flex; /* Giữ các phần tử trên cùng một hàng */
-  align-items: center;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -97,7 +104,7 @@ html {
 .game-list-button-wrapper {
   position: absolute;
   top: 10px;
-  left: 10px;
+  right: 10px;
 }
 
 .game-list-button {
@@ -119,7 +126,7 @@ html {
   background-image: url("/assets/backgroundcard.jpg");
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.125);
-  padding: 38px;
+  padding: 25px;
   margin: 25px;
   filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.125));
   display: flex;
