@@ -21,7 +21,6 @@ body {
   position: fixed;
   z-index: 999;
   padding: 0 100px;
-  
 }
 
 .navbar-list {
@@ -78,80 +77,142 @@ body {
   font-weight: bold;
 }
 /* Games */
-.game-list{
-  height: 100vh;
-  position: relative;
-  background: #141414;
-}
-.game-list-button{
-  font-weight: 700;
-  font-size: 1.25rem /* 20px */;
-  line-height: 1.75rem /* 28px */;
+
+.game-list-button {
+  font-weight: 500;
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
   padding-left: 20px;
   padding-top: 10px;
+  display: inline-flex; /* Giữ các phần tử trên cùng một hàng */
+  align-items: center;
+  transition: transform 0.3s ease-in-out;
 }
+
+.game-list-button:hover {
+  transform: translateX(10px); /* Dịch chuyển toàn bộ button sang phải */
+}
+.game-list-button-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.game-list-button {
+  display: flex;
+  justify-content: flex-start;
+}
+/* Game List Cards */
+
+@import url("https://fonts.googleapis.com/css2?family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap");
+.container-game {
+  background: #0a0909;
+  width: screen;
+  height: 700px;
+  display: flex;
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  position: relative; /* Để hỗ trợ phần tử con có position absolute */
+
+
+}
+.card-game {
+  background-image: url('/assets/backgroundcard.jpg');
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 38px;
+  margin: 25px;
+  filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.125));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 400px;
+  max-height: 537px;
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image {
+  background-image: url(https://images.unsplash.com/photo-1641326201918-3cafc641038e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80);
+  background-position: center;
+  background-size: cover;
+  height: 300px;
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.255);
+}
+
+h1 {
+  font-family: "Righteous", sans-serif;
+  color: rgba(255, 255, 255, 0.98);
+  text-transform: uppercase;
+  font-size: 1.4rem;
+}
+
+p {
+  color: #fff;
+  font-family: "Lato", sans-serif;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 150%;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.button-wrapper {
+  margin-top: 18px;
+}
+
+.btn {
+  border: none;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+}
+
+.btn + .btn {
+  margin-left: 10px;
+}
+
+.outline {
+  background: transparent;
+  color: rgba(0, 212, 255, 0.9);
+  border: 1px solid rgba(0, 212, 255, 0.6);
+  transition: all 0.3s ease;
+}
+
+.outline:hover {
+  transform: scale(1.125);
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+}
+
+.fill {
+  background: rgba(0, 212, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.fill:hover {
+  transform: scale(1.125);
+  border-color: rgba(255, 255, 255, 0.9);
+  filter: drop-shadow(0 10px 5px rgba(0, 0, 0, 0.125));
+  transition: all 0.3s ease;
+}
+
 .letter {
   opacity: 0;
   animation: fadeIn 0.5s forwards;
 }
-/* button */
-/* From Uiverse.io by satyamchaudharydev */ 
-button {
-  padding: 0;
-  margin: 0;
-  border: none;
-  background: none;
-  cursor: pointer;
-}
-
-button {
-  --primary-color: white;
-  --hovered-color: white;
-  position: relative;
-  display: flex;
-  font-weight: 600;
-  font-size: 20px;
-  gap: 0.5rem;
-  align-items: center;
-}
-
-button p {
-  margin: 0;
-  position: relative;
-  font-size: 20px;
-  color: var(--primary-color);
-}
-
-button::after {
-  position: absolute;
-  content: "";
-  width: 0;
-  left: 0;
-  bottom: -7px;
-  background: var(--hovered-color);
-  height: 2px;
-  transition: 0.3s ease-out;
-}
-
-button:hover::after {
-  width: 100%;
-}
-
-button:hover p::before {
-  width: 100%;
-}
-
-button:hover svg {
-  transform: translateX(4px);
-}
-
-button svg {
-  transition: 0.2s;
-  position: relative;
-  width: 15px;
-  transition-delay: 0.2s;
-}
-
 @keyframes fadeIn {
   to {
     opacity: 1;

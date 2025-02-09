@@ -2,6 +2,30 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
+  const gameData = [
+    {
+      id: 1,
+      title: "Toyota Supra",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    },
+    {
+      id: 2,
+      title: "Nissan GTR",
+      description: "A legendary sports car with high performance.",
+    },
+    {
+      id: 3,
+      title: "Ferrari 488",
+      description: "An Italian supercar with a powerful engine.",
+    },
+    {
+      id: 4,
+      title: "Lamborghini Huracan",
+      description: "Luxury and speed combined in one package.",
+    },
+   
+  ];
+
   return (
     <div>
       <div className="homepage">
@@ -20,27 +44,28 @@ const HomePage = () => {
           The perfect place to browse games and assets
         </p>
       </div>
-      <div className="game-list arrow ">
-        <button>
-          <Link to="/games">
-            <p>View all games</p>
-          </Link>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            stroke-width="4"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-            ></path>
-          </svg>
-        </button>
+      <div className="container-game">
+        <div className="game-list-button-wrapper">
+          <button className="game-list-button">
+            <Link to="/games" className="flex items-center gap-3">
+              <span>View all games</span>{" "}
+              <i className="fa-solid fa-chevron-right"></i>
+            </Link>
+          </button>
+        </div>
+        {gameData.slice(0, 4).map((game) => (
+          <div className="card-game " key={game.id}>
+            <div class="wrapper">
+              <div class="banner-image"> </div>
+              <h1>{game.title}</h1> <p>{game.description}</p>
+            </div>
+            <div class="button-wrapper">
+              <button class="btn outline">DETAILS</button>
+              <button class="btn fill">BUY NOW</button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
