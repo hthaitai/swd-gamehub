@@ -49,7 +49,6 @@ const HomePage = () => {
           The perfect place to browse games and assets
         </p>
       </header>
-      <body>
         <div className="container-game animate-scroll" id="gamelist">
           <h1 className="game-title ">Popular Games</h1>
 
@@ -78,7 +77,7 @@ const HomePage = () => {
 
         <div className="container-free animate-scroll">
           <h1 className="game-free ">
-            Free Games<i class="fa-solid fa-gift pl-4"></i>
+            Free Games<i className="fa-solid fa-gift pl-4"></i>
           </h1>
           {gameData.slice(0, 4).map((game) => (
             <div className="card-free-game" key={game.id}>
@@ -90,7 +89,6 @@ const HomePage = () => {
             </div>
           ))}
         </div>
-      </body>
     </div>
   );
 };

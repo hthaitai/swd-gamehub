@@ -2,6 +2,13 @@ body {
   background-color: black;
   color: white;
 }
+/* responsive */
+@media (max-width: 640px) {
+  .homepage-title {
+    font-size: 30px !important;
+
+  }
+}
 
 /* Navbar */
 .logo {
@@ -126,7 +133,8 @@ html {
 }
 .container-free {
   padding-top: 50px;
-  background: #3c3c3c;
+  /* background: #3c3c3c; */
+  background: #1c1c1c;
   width: 100%;
   height: 500px;
   border-radius: 25px;
@@ -148,28 +156,25 @@ html {
 }
 
 .game-free-title {
-  left: 0;
-  background: black;
-  height: 50px;
+  background:black;
+  opacity:0.75;
+  height: 32px;
   width: 100%;
   bottom: 0;
   position: absolute;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
   /* Ngăn chữ bị tràn */
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
   padding: 10px;
+  font-weight:750;
 }
 .card-free-game img {
   width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng */
   height: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều cao */
-  border-radius: 20px 20px 0 0; /* Giữ bo tròn chỉ ở phần trên */
 }
 .card-free-game {
   margin-top: 25px;
-  border-radius: 20px;
+  border-radius: 10px;
   border: 25px;
   margin:25px;
   filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.125));
