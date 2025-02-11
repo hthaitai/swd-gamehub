@@ -3,10 +3,8 @@ body {
   color: white;
 }
 /* responsive */
-@media (max-width: 640px) {
-  .homepage-title {
-    font-size: 30px !important;
-
+@media (max-width: 1100px) {
+  .card-game {
   }
 }
 
@@ -26,6 +24,7 @@ html {
   justify-content: space-between;
   align-items: center;
   height: 84px;
+  top: 0;
   width: 100%;
   position: fixed;
   z-index: 999;
@@ -142,11 +141,10 @@ html {
   align-items: center; /* Căn giữa theo chiều dọc */
   justify-content: center; /* Căn giữa theo chiều ngang */
   position: relative; /* Để hỗ trợ phần tử con có position absolute */
-
 }
 
 .game-free {
-  margin-top:20px;
+  margin-top: 20px;
   position: absolute; /* Giữ cố định trong container-free */
   top: 20px; /* Cách mép trên 20px */
   left: 30px; /* Cách mép trái 30px */
@@ -156,8 +154,8 @@ html {
 }
 
 .game-free-title {
-  background:black;
-  opacity:0.75;
+  background: black;
+  opacity: 0.75;
   height: 32px;
   width: 100%;
   bottom: 0;
@@ -166,7 +164,7 @@ html {
   overflow: hidden;
   white-space: nowrap;
   padding: 10px;
-  font-weight:750;
+  font-weight: 750;
 }
 .card-free-game img {
   width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng */
@@ -176,7 +174,7 @@ html {
   margin-top: 25px;
   border-radius: 10px;
   border: 25px;
-  margin:25px;
+  margin: 25px;
   filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.125));
   display: flex;
   flex-direction: column;
@@ -188,6 +186,11 @@ html {
 }
 
 .cardbox-free-game {
+}
+.text-game {
+  margin-top: 4px;
+  margin-bot: 4px;
+  font-weight: 600;
 }
 .card-game {
   background-image: url("/assets/backgroundcard.jpg");
@@ -306,10 +309,55 @@ p {
 }
 
 /* Games Page */
-.gamespage {
-  padding-top: 84px;
+.container-page {
+  display: flex;
+  flex-direction: column;
+  margin: 150px;
+  min-height: 100vh;
+}
+.title {
+  font-size: 70px;
+  font-weight: 800;
+}
+.game-box {
+  margin: 0 auto 20px auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.form-input {
+  border-radius: 3px;
+  background: none;
+  border: 2px solid gray;
+  width: 280px;
+  padding: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
 }
 
+.form-input option {
+  background-color: #1c2628; /* Cùng màu với filter */
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px;
+}
+
+.game-filter {
+  width: 350px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  /* text-align: center; */
+  background-color: #1c2628;
+}
+.game-item {
+  width: 1000px;
+  background-color: lightcoral;
+}
 /* Assets Page */
 .assetspage {
   padding-top: 84px;
