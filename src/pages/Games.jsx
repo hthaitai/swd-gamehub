@@ -36,19 +36,24 @@ const Games = () => {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 ">
           {gameData.map((game) => (
-            <div className="border w-full flex" key={game.id}>
-              <img className="w-72 h-32" src={game.image} />
+            <div className="border flex p-[10px]" key={game.id}>
+              <img className="w-72 h-32 pr-5" src={game.image} />
 
-              <div>
+              <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <h1 className="">{game.title}</h1>{" "}
-                  <p className="">{game.description}</p>
-                  <p>{game.price}</p>
+                  <button className="hover:underline">
+                    <h1 className="text-game">{game.title}</h1>
+                  </button>
+                  <p>{game.description}</p>
                 </div>
-                <button className="">DETAILS</button>
-                <button className="">BUY NOW</button>
+
+                <div className="flex justify-end">
+                 
+                  <p>{game.price}</p> 
+                  <button><i class="fa-solid fa-cart-shopping"></i></button>
+                </div>
               </div>
             </div>
           ))}
