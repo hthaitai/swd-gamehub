@@ -33,7 +33,14 @@ const Games = () => {
             </select>{" "}
           </div>
         </div>
-        <div className=" game-item"></div>
+        <div className=" game-item">
+          <div className="card"></div>
+          <div className="card"></div>
+          <div className="card"></div>
+          <div className="card"></div>
+          <div className="card"></div>
+          <div className="card"></div>
+        </div>
       </div>
     </div>
   );

@@ -337,11 +337,26 @@ p {
 }
 
 .form-input option {
-  background-color: #1c2628; /* Cùng màu với filter */
+  background-color: #1c1c1c; /* Cùng màu với filter */
   color: white;
   font-size: 14px;
   font-weight: 700;
   padding: 5px;
+}
+.card {
+  width: 200px;
+  height: 260px;
+  margin: 50px;
+  background-color: #212121;
+  box-shadow: 15px 15px 30px #191919, -15px -15px 30px #292929;
+  transition: border-radius cubic-bezier(0.075, 0.82, 0.165, 1) 1s,
+    transform cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+}
+
+.card:hover {
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  transform: scale(1.05);
 }
 
 .game-filter {
@@ -352,11 +367,14 @@ p {
   align-content: center;
   flex-wrap: wrap;
   /* text-align: center; */
-  background-color: #1c2628;
+  background-color: #1c1c1c;
 }
 .game-item {
-  width: 1000px;
-  background-color: lightcoral;
+  width: 920px;
+  /* background-color: lightcoral; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 /* Assets Page */
 .assetspage {
