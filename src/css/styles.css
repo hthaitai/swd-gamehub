@@ -226,7 +226,7 @@ h1 {
   font-size: 1.4rem;
 }
 
-p {
+/* p {
   color: #fff;
   font-family: "Lato", sans-serif;
   text-align: center;
@@ -234,7 +234,7 @@ p {
   line-height: 150%;
   letter-spacing: 2px;
   text-transform: uppercase;
-}
+} */
 
 .button-wrapper {
   margin-top: 18px;
@@ -310,19 +310,21 @@ p {
 .container-page {
   display: flex;
   flex-direction: column;
-  margin: 150px;
   min-height: 100vh;
 }
+
 .title {
   font-size: 70px;
   font-weight: 800;
 }
+
 .game-box {
   margin: 0 auto 20px auto;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
 }
+
 .form-input {
   border-radius: 3px;
   background: none;

@@ -1,36 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import gameData from "../data/gameData";
 
 const HomePage = () => {
-  const gameData = [
-    {
-      id: 1,
-      title: "Cyberpunk 2077",
-      description: "An open-world RPG set in a futuristic city.",
-      image: "https://cdn.akamai.steamstatic.com/steam/apps/1091500/header.jpg",
-    },
-    {
-      id: 2,
-      title: "Elden Ring",
-      description:
-        "A challenging open-world adventure developed by FromSoftware.",
-      image: "https://cdn.akamai.steamstatic.com/steam/apps/1245620/header.jpg",
-    },
-
-    {
-      id: 3,
-      title: "The Witcher 3: Wild Hunt",
-      description: "A story-driven open-world RPG set in a fantasy universe.",
-      image: "https://cdn.akamai.steamstatic.com/steam/apps/292030/header.jpg",
-    },
-    {
-      id: 4,
-      title: "Red Dead Redemption 2",
-      description: "An epic Western action-adventure game from Rockstar Games.",
-      image: "https://cdn.akamai.steamstatic.com/steam/apps/1174180/header.jpg",
-    },
-  ];
-
   return (
     <div>
       <header className="homepage">

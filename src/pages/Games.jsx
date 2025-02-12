@@ -1,9 +1,11 @@
-import React from "react";
+import React from "react"
+import gameData from "../data/gameData"
 
 const Games = () => {
   return (
     <div className="container-page ">
       <h1 className="title">Games</h1>
+
       <div className="game-box">
         <div className=" game-filter">
           <h1 className="font-extrabold mt-4">Filter By</h1>
@@ -33,17 +35,27 @@ const Games = () => {
             </select>{" "}
           </div>
         </div>
-        <div className=" game-item">
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
-          <div className="card"></div>
+
+        <div className="flex flex-col gap-3">
+          {gameData.map((game) => (
+            <div className="border w-full flex" key={game.id}>
+              <img className="w-72 h-32" src={game.image} />
+
+              <div>
+                <div>
+                  <h1 className="">{game.title}</h1>{" "}
+                  <p className="">{game.description}</p>
+                  <p>{game.price}</p>
+                </div>
+                <button className="">DETAILS</button>
+                <button className="">BUY NOW</button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Games;
+export default Games
