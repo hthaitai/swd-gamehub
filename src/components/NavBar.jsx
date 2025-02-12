@@ -1,6 +1,7 @@
 import React from "react"
 import { NavLink } from "react-router-dom"
 import { CircleUserRound } from "lucide-react"
+import { Link } from "react-router-dom"
 
 const NavBar = () => {
   return (
@@ -42,7 +43,7 @@ const NavBar = () => {
       </ul>
       <button className="sign-in-btn">
         <CircleUserRound className="sign-in-icon" strokeWidth={1} />
-        Sign in
+        <Link to="/login">Sign in</Link>
       </button>
     </nav>
   )
