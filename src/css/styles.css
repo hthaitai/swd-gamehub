@@ -3,11 +3,6 @@ body {
   color: white;
 }
 /* responsive */
-@media (max-width: 640px) {
-  .homepage-title {
-    font-size: 30px !important;
-  }
-}
 
 /* Navbar */
 .logo {
@@ -27,6 +22,7 @@ html {
   justify-content: space-between;
   align-items: center;
   height: 84px;
+  top: 0;
   width: 100%;
   position: fixed;
   z-index: 999;
@@ -189,6 +185,11 @@ html {
 
 .cardbox-free-game {
 }
+.text-game {
+  margin-top: 4px;
+  margin-bot: 4px;
+  font-weight: 600;
+}
 .card-game {
   background-image: url("/assets/backgroundcard.jpg");
   border-radius: 25px;
@@ -306,10 +307,73 @@ p {
 }
 
 /* Games Page */
-.gamespage {
-  padding-top: 84px;
+.container-page {
+  display: flex;
+  flex-direction: column;
+  margin: 150px;
+  min-height: 100vh;
+}
+.title {
+  font-size: 70px;
+  font-weight: 800;
+}
+.game-box {
+  margin: 0 auto 20px auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: row;
+}
+.form-input {
+  border-radius: 3px;
+  background: none;
+  border: 2px solid gray;
+  width: 280px;
+  padding: 8px;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
 }
 
+.form-input option {
+  background-color: #1c1c1c; /* Cùng màu với filter */
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 5px;
+}
+.card {
+  width: 200px;
+  height: 260px;
+  margin: 50px;
+  background-color: #212121;
+  box-shadow: 15px 15px 30px #191919, -15px -15px 30px #292929;
+  transition: border-radius cubic-bezier(0.075, 0.82, 0.165, 1) 1s,
+    transform cubic-bezier(0.075, 0.82, 0.165, 1) 1s;
+}
+
+.card:hover {
+  border-bottom-right-radius: 50px;
+  border-top-left-radius: 50px;
+  transform: scale(1.05);
+}
+
+.game-filter {
+  width: 350px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  flex-wrap: wrap;
+  /* text-align: center; */
+  background-color: #1c1c1c;
+}
+.game-item {
+  width: 920px;
+  /* background-color: lightcoral; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
 /* Assets Page */
 .assetspage {
   padding-top: 84px;
