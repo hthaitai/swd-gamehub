@@ -30,7 +30,7 @@ const Login = () => {
         </div>
 
         <div className="flex justify-end">
-          <button className="mt-14 bg-white text-black font-bold text-sm p-[4px_32px] rounded-md border border-transparent hover:bg-black hover:text-white hover:border-white">
+          <button className="mt-14 bg-white text-black font-bold text-sm w-32 h-7 flex items-center justify-center rounded-md border border-transparent hover:bg-black hover:text-white hover:border-white">
             Sign in
           </button>
         </div>

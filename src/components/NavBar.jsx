@@ -5,7 +5,7 @@ import { Link } from "react-router-dom"
 
 const NavBar = () => {
   return (
-    <nav className="navbar bg-opacity-50 bg-black">
+    <nav className="navbar bg-black">
       <h1 className="logo">
         <span className="bold">Game</span> | Hub
       </h1>
