@@ -1,5 +1,5 @@
 body {
-  background-color: #0F0F0F;
+  background-color: #0f0f0f;
   color: white;
 }
 
@@ -110,8 +110,8 @@ html {
 }
 .game-list-button-wrapper {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  left: 170px;
+  top: 50px;
 }
 
 .game-list-button {
@@ -122,12 +122,66 @@ html {
 
 .container-game {
   background: #0a0909;
-  width: screen;
-  height: 800px;
+  /* width: screen; */
+  height: 600px;
   display: flex;
   align-items: center; /* Căn giữa theo chiều dọc */
   justify-content: center; /* Căn giữa theo chiều ngang */
-  position: relative; /* Để hỗ trợ phần tử con có position absolute */
+}
+
+.game-box-popular {
+  background: black;
+  position: relative;
+  height: 600px;
+  width: 100%;
+  display: flex;
+  /* flex-direction: row; */
+  align-items: center;
+}
+.card-game-popular {
+  height: 450px;
+  width: 220px;
+  /* display:flex; */
+  border-radius: 5px;
+  margin: 120px 25px 0 25px;
+}
+.card-popular-img {
+  border-radius: 5px;
+  height: 310px; /* Tăng chiều cao để giữ tỷ lệ */
+  width: 220px; /* Giữ tỷ lệ 2:3 */
+  object-fit: cover; /* Đảm bảo hình ảnh hiển thị đầy đủ */
+}
+.game-slider {
+  display: flex;
+  gap: 20px;
+  overflow: hidden;
+}
+
+.slider-buttons {
+  display: flex;
+  position: absolute;
+  justify-content: center;
+  right: 160px;
+  top: 70px;
+  margin-top: 10px;
+}
+.slider-buttons button:hover {
+  background-color: #555;
+}
+
+.slider-buttons button {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.slider-buttons button:disabled {
+  opacity: 0.5;
+  cursor: default;
 }
 .container-free {
   padding-top: 50px;
@@ -184,8 +238,6 @@ html {
   overflow: hidden; /* Ngăn ảnh bị tràn */
 }
 
-.cardbox-free-game {
-}
 .text-game {
   margin-top: 4px;
   margin-bot: 4px;
