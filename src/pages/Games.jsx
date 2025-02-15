@@ -9,69 +9,85 @@ const Games = () => {
   const priceOptions = ["Free", "Paid"]
   const playerOptions = ["Singleplayer", "Multiplayer"]
 
-  const [wishlist, setWishlist] = useState([])
+  const [wishlist, toggleWishlist] = useState([])
   const [filteredGames, setFilteredGames] = useState(gameData)
 
-  const [selectedGenre, setSelectedGenre] = useState(null)
-  const [selectedPlatform, setSelectedPlatform] = useState(null)
-  const [selectedPrice, setSelectedPrice] = useState(null)
-  const [selectedPlayer, setSelectedPlayer] = useState(null)
+  const [selectedGenres, setSelectedGenres] = useState([])
+  const [selectedPlatforms, setSelectedPlatforms] = useState([])
+  const [selectedPrices, setSelectedPrices] = useState([])
+  const [selectedPlayers, setSelectedPlayers] = useState([])
+  const [hoveredImage, setHoveredImage] = useState("")
+
+  const handleGenreSelect = (option) => {
+    setSelectedGenres((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    )
+  }
+
+  const handlePlatformSelect = (option) => {
+    setSelectedPlatforms((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    )
+  }
+
+  const handlePriceSelect = (option) => {
+    setSelectedPrices((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    )
+  }
+
+  const handlePlayerSelect = (option) => {
+    setSelectedPlayers((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option]
+    )
+  }
+
+  const clearFilters = () => {
+    setSelectedGenres([])
+    setSelectedPlatforms([])
+    setSelectedPrices([])
+    setSelectedPlayers([])
+  }
 
   useEffect(() => {
     let filtered = gameData
 
-    if (selectedGenre) {
-      filtered = filtered.filter((game) => game.genre === selectedGenre)
+    if (selectedGenres.length > 0) {
+      filtered = filtered.filter((game) => selectedGenres.includes(game.genre))
     }
 
-    if (selectedPlatform) {
-      filtered = filtered.filter((game) => game.platform === selectedPlatform)
+    if (selectedPlatforms.length > 0) {
+      filtered = filtered.filter((game) =>
+        selectedPlatforms.includes(game.platform)
+      )
     }
 
-    if (selectedPrice) {
-      if (selectedPrice === "Free") {
-        filtered = filtered.filter((game) => game.price === "Free")
-      } else if (selectedPrice === "Paid") {
-        filtered = filtered.filter((game) => game.price !== "Free")
-      }
+    if (selectedPrices.length > 0) {
+      filtered = filtered.filter((game) =>
+        selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
+      )
     }
 
-    if (selectedPlayer) {
-      filtered = filtered.filter(
-        (game) => game.playerSupport === selectedPlayer
+    if (selectedPlayers.length > 0) {
+      filtered = filtered.filter((game) =>
+        selectedPlayers.includes(game.playerSupport)
       )
     }
 
     setFilteredGames(filtered)
-  }, [selectedGenre, selectedPlatform, selectedPrice, selectedPlayer])
-
-  const toggleWishlist = (gameId) => {
-    setWishlist((prevWishlist) =>
-      prevWishlist.includes(gameId)
-        ? prevWishlist.filter((id) => id !== gameId)
-        : [...prevWishlist, gameId]
-    )
-  }
-
-  const handleGenreSelect = (option) => {
-    setSelectedGenre((prevOption) => (prevOption === option ? null : option))
-  }
-
-  const handlePlatformSelect = (option) => {
-    setSelectedPlatform((prevOption) => (prevOption === option ? null : option))
-  }
-
-  const handlePriceSelect = (option) => {
-    setSelectedPrice((prevOption) => (prevOption === option ? null : option))
-  }
-
-  const handlePlayerSelect = (option) => {
-    setSelectedPlayer((prevOption) => (prevOption === option ? null : option))
-  }
+  }, [selectedGenres, selectedPlatforms, selectedPrices, selectedPlayers])
 
   return (
     <div className="flex mt-[84px]">
-      <div className="mt-[40px] w-[310px] px-4 border-r-[1px] border-gray-300">
+      <div className="mt-[40px] w-[275px] px-4">
         <div className="relative self-center pb-4">
           <input
             className="text-sm bg-[#202024] border-b border-[#9A9A9A] focus:outline-none focus:border-white h-8 w-full pl-4 rounded-md"
@@ -80,30 +96,47 @@ const Games = () => {
           />
           <i className="text-[11px] text-gray-300 absolute top-3 right-3 fas fa-search"></i>
         </div>
+
+        <div className="p-[12px] flex items-baseline justify-between">
+          <h1 className="normal-case text-base font-bold">Filters</h1>
+          {(selectedGenres.length > 0 ||
+            selectedPlatforms.length > 0 ||
+            selectedPrices.length > 0 ||
+            selectedPlayers.length > 0) && (
+            <button className="text-xs text-gray-300" onClick={clearFilters}>
+              Clear All Filters
+            </button>
+          )}
+        </div>
+
         <Dropdown
           label="Genres"
           options={genreOptions}
           onSelect={handleGenreSelect}
+          selectedOptions={selectedGenres}
         />
         <Dropdown
           label="Platform"
           options={platformOptions}
           onSelect={handlePlatformSelect}
+          selectedOptions={selectedPlatforms}
         />
         <Dropdown
           label="Price"
           options={priceOptions}
           onSelect={handlePriceSelect}
+          selectedOptions={selectedPrices}
         />
         <Dropdown
           label="Player"
           options={playerOptions}
           onSelect={handlePlayerSelect}
+          selectedOptions={selectedPlayers}
         />
       </div>
 
-      <div className="flex flex-1 justify-center">
-        <div className="mt-[40px] gap-3 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-10 flex flex-1 justify-center">
+        <div className="gap-3 px-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
           {filteredGames.map((game, index) => (
             <FadeContent
               blur={true}
@@ -113,7 +146,11 @@ const Games = () => {
               delay={index * 150}
               key={game.id}
             >
-              <div className="relative max-w-[400px] h-auto group overflow-hidden">
+              <div
+                className="relative max-w-[400px] h-auto group overflow-hidden"
+                onMouseEnter={() => setHoveredImage(game.image)} // 🔹 Change background on hover
+                onMouseLeave={() => setHoveredImage("")} // 🔹 Reset on mouse leave
+              >
                 <img
                   className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
                   src={game.image}
