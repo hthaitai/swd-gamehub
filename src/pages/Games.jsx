@@ -1,15 +1,49 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import gameData from "../data/gameData"
 import Dropdown from "../components/Dropdown"
-import { NavLink } from "react-router-dom"
 import FadeContent from "../components/Animations/FadeContent"
 
 const Games = () => {
-  const genreOptions = ["Action", "Racing", "Simulation"]
+  const genreOptions = ["Action", "RPG", "Open World"]
+  const platformOptions = ["PC", "PlayStation", "Xbox"]
+  const priceOptions = ["Free", "Paid"]
   const playerOptions = ["Singleplayer", "Multiplayer"]
-  const platformOptions = ["PC", "Console", "Mobile"]
 
   const [wishlist, setWishlist] = useState([])
+  const [filteredGames, setFilteredGames] = useState(gameData)
+
+  const [selectedGenre, setSelectedGenre] = useState(null)
+  const [selectedPlatform, setSelectedPlatform] = useState(null)
+  const [selectedPrice, setSelectedPrice] = useState(null)
+  const [selectedPlayer, setSelectedPlayer] = useState(null)
+
+  useEffect(() => {
+    let filtered = gameData
+
+    if (selectedGenre) {
+      filtered = filtered.filter((game) => game.genre === selectedGenre)
+    }
+
+    if (selectedPlatform) {
+      filtered = filtered.filter((game) => game.platform === selectedPlatform)
+    }
+
+    if (selectedPrice) {
+      if (selectedPrice === "Free") {
+        filtered = filtered.filter((game) => game.price === "Free")
+      } else if (selectedPrice === "Paid") {
+        filtered = filtered.filter((game) => game.price !== "Free")
+      }
+    }
+
+    if (selectedPlayer) {
+      filtered = filtered.filter(
+        (game) => game.playerSupport === selectedPlayer
+      )
+    }
+
+    setFilteredGames(filtered)
+  }, [selectedGenre, selectedPlatform, selectedPrice, selectedPlayer])
 
   const toggleWishlist = (gameId) => {
     setWishlist((prevWishlist) =>
@@ -19,115 +53,100 @@ const Games = () => {
     )
   }
 
+  const handleGenreSelect = (option) => {
+    setSelectedGenre((prevOption) => (prevOption === option ? null : option))
+  }
+
+  const handlePlatformSelect = (option) => {
+    setSelectedPlatform((prevOption) => (prevOption === option ? null : option))
+  }
+
+  const handlePriceSelect = (option) => {
+    setSelectedPrice((prevOption) => (prevOption === option ? null : option))
+  }
+
+  const handlePlayerSelect = (option) => {
+    setSelectedPlayer((prevOption) => (prevOption === option ? null : option))
+  }
+
   return (
-    <div className="mt-[84px]">
-      <div className="flex">
-        <div className="mt-16 w-[300px] px-4 border-r-[1px] border-gray-500">
-          <div className="relative self-center pb-4">
-            <input
-              className="border-b border-gray-300 focus:outline-none focus:border-white h-9 w-full px-4 bg-neutral-900 rounded-md"
-              type="text"
-              placeholder="Search for a game"
-            />
-            <i className="text-gray-300 absolute top-2.5 right-3 fas fa-search"></i>
-          </div>
-          <Dropdown label="Genres" options={genreOptions} />
-          <Dropdown label="Player" options={playerOptions} />
-          <Dropdown label="Platform" options={platformOptions} />
+    <div className="flex mt-[84px]">
+      <div className="mt-[40px] w-[310px] px-4 border-r-[1px] border-gray-300">
+        <div className="relative self-center pb-4">
+          <input
+            className="text-sm bg-[#202024] border-b border-[#9A9A9A] focus:outline-none focus:border-white h-8 w-full pl-4 rounded-md"
+            type="text"
+            placeholder="Search for a game"
+          />
+          <i className="text-[11px] text-gray-300 absolute top-3 right-3 fas fa-search"></i>
         </div>
+        <Dropdown
+          label="Genres"
+          options={genreOptions}
+          onSelect={handleGenreSelect}
+        />
+        <Dropdown
+          label="Platform"
+          options={platformOptions}
+          onSelect={handlePlatformSelect}
+        />
+        <Dropdown
+          label="Price"
+          options={priceOptions}
+          onSelect={handlePriceSelect}
+        />
+        <Dropdown
+          label="Player"
+          options={playerOptions}
+          onSelect={handlePlayerSelect}
+        />
+      </div>
 
-        <div className="flex flex-col flex-1 gap-8">
-          <div className="pt-16 w-[1000px] self-center ">
-            <div className="flex items-center gap-4">
-              <NavLink>
-                <h1 className="text-[28px] normal-case text-gray-300">Home</h1>
-              </NavLink>
+      <div className="flex flex-1 justify-center">
+        <div className="mt-[40px] gap-3 px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {filteredGames.map((game, index) => (
+            <FadeContent
+              blur={true}
+              duration={1000}
+              easing="ease-out"
+              initialOpacity={0}
+              delay={index * 150}
+              key={game.id}
+            >
+              <div className="relative max-w-[400px] h-auto group overflow-hidden">
+                <img
+                  className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
+                  src={game.image}
+                  alt="Game"
+                />
 
-              <i className="fa-solid fa-chevron-right text-[14px] text-gray-300"></i>
+                <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
+                  <button title="Add to cart" className="hover:text-white">
+                    <i className="fa-solid fa-cart-shopping text-xs"></i>
+                  </button>
 
-              <NavLink>
-                <h1 className="text-[28px] normal-case">Games</h1>
-              </NavLink>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2 flex-1 w-[1000px] self-center">
-            {gameData.map((game, index) => (
-              <FadeContent
-                blur={true}
-                duration={1000}
-                easing="ease-out"
-                initialOpacity={0}
-                delay={index*150}
-              >
-                <div
-                  className="flex p-1 bg-neutral-900 rounded-md"
-                  key={game.id}
-                >
-                  <img
-                    className="w-[200px] h-[100px] mr-2 rounded-sm"
-                    src={game.image}
-                  />
-
-                  <div className="px-1 pt-1 flex-1 flex flex-col justify-between">
-                    <div>
-                      <div className="flex justify-between">
-                        <button className="hover:underline">
-                          <h1 className="normal-case text-xl font-bold">
-                            {game.title}
-                          </h1>
-                        </button>
-
-                        <div className="flex gap-2 size text-gray-300">
-                          <button className="hover:text-white">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                          </button>
-
-                          <button
-                            className="hover:text-white"
-                            onClick={() => toggleWishlist(game.id)}
-                          >
-                            <i
-                              className={
-                                wishlist.includes(game.id)
-                                  ? "fa-solid fa-heart"
-                                  : "fa-regular fa-heart"
-                              }
-                            ></i>
-                          </button>
-                        </div>
-                      </div>
-
-                      <p className="pt-1 text-sm text-gray-300">
-                        {game.description}
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-8 text-sm">
-                        <div>
-                          <i class="fa-solid fa-thumbs-up"></i>
-                          <span className="pl-1">300.000</span>
-                        </div>
-
-                        <div>
-                          <i class="fa-solid fa-thumbs-down"></i>
-                          <span className="pl-1">100.000</span>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-3 items-center">
-                        <p>{game.price}</p>
-                        <button className="text-sm font-bold text-black w-[90px] h-[30px] flex items-center justify-center bg-white rounded-[4px] border border-transparent hover:bg-black hover:text-white hover:border-white">
-                          <p>{game.price === "Free" ? "Play" : "Buy"}</p>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+                  <button
+                    title="Add to wishlist"
+                    className="hover:text-white"
+                    onClick={() => toggleWishlist(game.id)}
+                  >
+                    <i
+                      className={
+                        wishlist.includes(game.id)
+                          ? "fa-solid fa-heart text-red-500 text-xs"
+                          : "fa-regular fa-heart text-xs"
+                      }
+                    ></i>
+                  </button>
                 </div>
-              </FadeContent>
-            ))}
-          </div>
+              </div>
+
+              <div className="py-2 w-[300px]">
+                <p className="font-medium">{game.title}</p>
+                <p className="text-sm text-gray-300">{game.price}</p>
+              </div>
+            </FadeContent>
+          ))}
         </div>
       </div>
     </div>

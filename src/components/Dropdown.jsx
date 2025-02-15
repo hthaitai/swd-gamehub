@@ -1,16 +1,25 @@
 import React, { useState } from "react"
-import AnimatedContent from "./Animations/AnimatedContent"
+import FadeContent from "./Animations/FadeContent"
 
-const Dropdown = ({ label, options }) => {
+const Dropdown = ({ label, options, onSelect }) => {
   const [open, setOpen] = useState(false)
+  const [active, isActive] = useState(null)
 
   const toggleDropdown = () => {
     setOpen(!open)
   }
+
+  const handleClick = (option) => {
+    onSelect(option)
+    isActive((prevStyle) => (prevStyle === option ? null : option))
+  }
+
   return (
     <div className="flex flex-col gap-[6px] mb-[6px]">
       <button
-        className="flex justify-between items-center rounded-md p-[6px_12px] hover:border hover:bg-neutral-900 border border-transparent text-left"
+        className={`text-sm flex justify-between items-center rounded-md p-[6px_12px] hover:border hover:bg-[#272727] border border-transparent text-left ${
+          open ? "text-white" : "text-gray-300"
+        }`}
         onClick={toggleDropdown}
       >
         {label}
@@ -24,24 +33,23 @@ const Dropdown = ({ label, options }) => {
       {open && (
         <ul className="space-y-[6px]">
           {options.map((option, index) => (
-            <AnimatedContent
-              distance={50}
-              direction="horizontal"
-              reverse={true}
-              config={{ tension: 80, friction: 20 }}
+            <FadeContent
+              blur={true}
+              duration={1000}
+              easing="ease-out"
               initialOpacity={0}
-              animateOpacity
-              scale={1.1}
-              threshold={0.2}
-              delay={index*100}
+              delay={index * 100}
+              key={index}
             >
               <li
-                className="mb-[6px] rounded-md p-[6px_24px] text-sm text-gray-300 hover:border hover:bg-neutral-900 border border-transparent"
-                key={index}
+                className={`mb-[6px] rounded-md p-[6px_12px] text-sm text-gray-300 hover:border hover:bg-[#272727] border border-transparent ${
+                  active === option ? "bg-[#2D2D2D]" : ""
+                }`}
+                onClick={() => handleClick(option)}
               >
                 {option}
               </li>
-            </AnimatedContent>
+            </FadeContent>
           ))}
         </ul>
       )}
