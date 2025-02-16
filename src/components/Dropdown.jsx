@@ -1,9 +1,8 @@
 import React, { useState } from "react"
 import FadeContent from "./Animations/FadeContent"
 
-const Dropdown = ({ label, options, onSelect }) => {
+const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
   const [open, setOpen] = useState(false)
-  const [active, isActive] = useState(null)
 
   const toggleDropdown = () => {
     setOpen(!open)
@@ -11,7 +10,6 @@ const Dropdown = ({ label, options, onSelect }) => {
 
   const handleClick = (option) => {
     onSelect(option)
-    isActive((prevStyle) => (prevStyle === option ? null : option))
   }
 
   return (
@@ -22,7 +20,13 @@ const Dropdown = ({ label, options, onSelect }) => {
         }`}
         onClick={toggleDropdown}
       >
-        {label}
+        <div>
+          <span>{label}</span>
+          {selectedOptions.length > 0 && (
+            <span className="pl-2 text-xs text-gray-300">({selectedOptions.length})</span>
+          )}
+        </div>
+
         <i
           className={`fa-solid fa-chevron-right text-[11px] transition-transform duration-200 ${
             open ? "rotate-90" : ""
@@ -42,11 +46,14 @@ const Dropdown = ({ label, options, onSelect }) => {
               key={index}
             >
               <li
-                className={`mb-[6px] rounded-md p-[6px_12px] text-sm text-gray-300 hover:border hover:bg-[#272727] border border-transparent ${
-                  active === option ? "bg-[#2D2D2D]" : ""
+                className={`relative mb-[6px] rounded-md p-[6px_16px] text-sm text-gray-300 hover:border hover:bg-[#272727] border border-transparent ${
+                  selectedOptions.includes(option) ? "bg-[#2D2D2D]" : ""
                 }`}
                 onClick={() => handleClick(option)}
               >
+                {selectedOptions.includes(option) && (
+                  <span className="absolute left-0 top-2 bottom-2 w-[3px] bg-white rounded-md"></span>
+                )}
                 {option}
               </li>
             </FadeContent>
