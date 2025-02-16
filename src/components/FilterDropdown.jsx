@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import FadeContent from "./Animations/FadeContent"
 
-const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
+const FilterDropdown = ({ label, options, onSelect, selectedOptions }) => {
   const [open, setOpen] = useState(false)
 
   const toggleDropdown = () => {
@@ -15,7 +15,7 @@ const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
   return (
     <div className="flex flex-col gap-[6px] mb-[6px]">
       <button
-        className={`text-sm flex justify-between items-center rounded-md p-[6px_12px] hover:border hover:bg-[#272727] border border-transparent text-left ${
+        className={`text-sm flex justify-between items-center rounded-md p-[10px_16px] hover:border hover:bg-[#272727] border border-transparent text-left ${
           open ? "text-white" : "text-gray-300"
         }`}
         onClick={toggleDropdown}
@@ -23,7 +23,9 @@ const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
         <div>
           <span>{label}</span>
           {selectedOptions.length > 0 && (
-            <span className="pl-2 text-xs text-gray-300">({selectedOptions.length})</span>
+            <span className="pl-2 text-xs text-gray-300">
+              ({selectedOptions.length})
+            </span>
           )}
         </div>
 
@@ -42,17 +44,17 @@ const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
               duration={1000}
               easing="ease-out"
               initialOpacity={0}
-              delay={index * 100}
+              delay={index * 50}
               key={index}
             >
               <li
-                className={`relative mb-[6px] rounded-md p-[6px_16px] text-sm text-gray-300 hover:border hover:bg-[#272727] border border-transparent ${
+                className={`relative mb-[6px] rounded-md p-[10px_16px] text-sm text-gray-300 hover:bg-[#272727] ${
                   selectedOptions.includes(option) ? "bg-[#2D2D2D]" : ""
                 }`}
                 onClick={() => handleClick(option)}
               >
                 {selectedOptions.includes(option) && (
-                  <span className="absolute left-0 top-2 bottom-2 w-[3px] bg-white rounded-md"></span>
+                  <span className="absolute left-0 top-3 bottom-3 w-[2px] bg-white rounded-md"></span>
                 )}
                 {option}
               </li>
@@ -64,4 +66,4 @@ const Dropdown = ({ label, options, onSelect, selectedOptions }) => {
   )
 }
 
-export default Dropdown
+export default FilterDropdown
