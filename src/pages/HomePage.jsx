@@ -41,11 +41,14 @@ const HomePage = () => {
           <h1 className="game-title ">Popular Games</h1>
           {gameData.slice(currentIndex, currentIndex + itemsPerPage).map((game) => (
             <div className="card-game-popular ">
+              <button>
               <img
-                className="card-popular-img"
+                className="card-popular-img "
                 src={game.imagePortrait}
                 alt={game.title}
               />
+              </button>
+              
               <p className="pt-4 font-semibold">{game.title}</p>
               <p className="">{game.price}</p>
             </div>
@@ -74,14 +77,25 @@ const HomePage = () => {
           Free Games<i className="fa-solid fa-gift pl-4"></i>
         </h1>
         {gameData.slice(0, 4).map((game) => (
-          <div className="card-free-game" key={game.id}>
+          <button className="card-free-game" key={game.id}>
             <img src={game.image} alt={game.title} />
 
             <div className="game-free-title">
               <p>{game.title}</p>
             </div>
-          </div>
+          </button>
         ))}
+      </div>
+      <div className="game-box-popular">
+        <div>
+          
+        </div>
+        <div className="w-2/3 bg-red-400 h-full">
+
+        </div> 
+        <div className="w-1/2  bg-blue-400 h-full">
+
+        </div>
       </div>
     </div>
   );
