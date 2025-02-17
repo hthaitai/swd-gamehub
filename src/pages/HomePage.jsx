@@ -40,7 +40,7 @@ const HomePage = () => {
         <div className="flex text-center justify-center game-box-popular">
           <h1 className="game-title ">Popular Games</h1>
           {gameData.slice(currentIndex, currentIndex + itemsPerPage).map((game) => (
-            <div className="card-game-popular ">
+            <div className="card-game-popular " key={game.id}>
               <button>
               <img
                 className="card-popular-img "
@@ -53,7 +53,7 @@ const HomePage = () => {
               <p className="">{game.price}</p>
             </div>
           ))}
-          <div className="slider-buttons ">
+          <div  className="slider-buttons ">
             <button onClick={prevSlide} disabled={currentIndex === 0}>
               <i className="fa-solid fa-chevron-left"></i>
             </button>
@@ -81,7 +81,7 @@ const HomePage = () => {
             <img src={game.image} alt={game.title} />
 
             <div className="game-free-title">
-              <p>{game.title}</p>
+              <p className="">{game.title}</p>
             </div>
           </button>
         ))}
