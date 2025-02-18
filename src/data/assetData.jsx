@@ -28,7 +28,7 @@ const assetData = [
       image: "https://assetstorev1-prd-cdn.unity3d.com/key-image/edbd6772-633e-43b0-8f70-1689fdb7c993.jpg",
       price: 19.99,
       downloads: 9,
-      type: "3D",
+      type: "2D",
       uploadDate: "2024-01-10",
       lastUpdated: "2024-02-10"
     },

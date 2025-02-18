@@ -12,7 +12,7 @@ const Assets = () => {
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedType, setSelectedType] = useState([]);
   const [search, setSearch] = useState("");
-  const [sortOption, setSortOption] = useState("New Release");
+  const [sortOption, setSortOption] = useState("Last Updated");
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };

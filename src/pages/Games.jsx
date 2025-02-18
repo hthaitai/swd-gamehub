@@ -17,7 +17,7 @@ const Games = () => {
   const [selectedPrices, setSelectedPrices] = useState([])
   const [selectedPlayers, setSelectedPlayers] = useState([])
   const [search, setSearch] = useState("")
-  const [sortOption, setSortOption] = useState("New Release")
+  const [sortOption, setSortOption] = useState("Last Updated")
 
   const handleSearch = (e) => {
     setSearch(e.target.value)
