@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import gameData from "../data/gameData";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Autoplay } from "swiper/modules";
 
 const HomePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,10 +52,11 @@ const HomePage = () => {
             .map((game) => (
               <div className="card-game-popular " key={game.id}>
                 <button>
-                  <img
+                  <LazyLoadImage
                     className="card-popular-img "
                     src={game.imagePortrait}
                     alt={game.title}
+                    effect="blur"
                   />
                 </button>
 
@@ -81,25 +90,40 @@ const HomePage = () => {
         <h1 className="game-free ">
           Free Games<i className="fa-solid fa-gift pl-4"></i>
         </h1>
-        {gameData.slice(0, 4).map((game) => (
-          <button className="card-free-game" key={game.id}>
-            <img src={game.image} alt={game.title} />
-
-            <div className="game-free-title">
-              <p className="">{game.title}</p>
-            </div>
-          </button>
-        ))}
+        <Swiper
+          modules={[Autoplay]} // Thêm module Autoplay
+          spaceBetween={10}
+          speed={2500}
+          slidesPerView={3}
+          autoplay={{
+            delay: 0, // Tự động chạy sau 3 giây
+            disableOnInteraction: false, // Tiếp tục chạy dù người dùng tương tác
+          }}
+          loop={true} // Cho phép lặp lại sau khi hết danh sách
+        >
+          {gameData
+            .filter((game) => game.price === "Free")
+            .map((game) => (
+              <SwiperSlide key={game.id}>
+                <button className="card-free-game">
+                  <img src={game.image} alt={game.title} />
+                  <div className="game-free-title">
+                    <p>{game.title}</p>
+                  </div>
+                </button>
+              </SwiperSlide>
+            ))}
+        </Swiper>
       </div>
       <div className="game-box-popular">
         <div className="w-11/12 flex  h-full ">
           {/* <div className="w-7/12 bg-blue-400 h-full">
 a
           </div> */}
-          <div
-            className="w-full h-full animate-scroll bg-cover flex flex-col items-center justify-center p-6 text-white bg-center"
-          >
-            <h1  className="text-6xl font-bold ">Sell & Buy Unity Game Assets</h1>
+          <div className="w-full h-full animate-scroll bg-cover flex flex-col items-center justify-center p-6 text-white bg-center">
+            <h1 className="text-6xl font-bold ">
+              Sell & Buy Unity Game Assets
+            </h1>
             <p className="mt-2 text-xl text-center">
               Discover high-quality game assets for Unity, from 3D models to
               textures, animations, and UI elements. Start building your dream

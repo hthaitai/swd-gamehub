@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import assetData from "../data/assetData";
 import FilterDropdown from "../components/FilterDropdown";
-import FadeContent from "../components/Animations/FadeContent";
 import SortDropdown from "../components/SortDropdown";
 
 const Assets = () => {
@@ -12,7 +11,7 @@ const Assets = () => {
   const [selectedPrices, setSelectedPrices] = useState([]);
   const [selectedType, setSelectedType] = useState([]);
   const [search, setSearch] = useState("");
-  const [sortOption, setSortOption] = useState("Last Updated");
+  const [sortOption, setSortOption] = useState("New Release");
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -122,15 +121,9 @@ const Assets = () => {
           </div>
 
           <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {filteredAssets.map((game, index) => (
-              <FadeContent
-                blur={true}
-                duration={1000}
-                easing="ease-out"
-                initialOpacity={0}
-                delay={index * 150}
-                key={game.id}
-              >
+            {filteredAssets.map((game) => (
+               <div key={game.id}>
+              
                 <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
                   <img
                     className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
@@ -163,8 +156,7 @@ const Assets = () => {
                   <p className="font-medium">{game.title}</p>
                   <p className="text-sm text-gray-300">{game.price}</p>
                 </div>
-              </FadeContent>
-            ))}
+           </div>            ))}
           </div>
         </div>
       </div>
