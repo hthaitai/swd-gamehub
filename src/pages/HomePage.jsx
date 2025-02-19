@@ -39,25 +39,30 @@ const HomePage = () => {
       <div className=" animate-scroll" id="gamelist">
         <div className="flex text-center justify-center game-box-popular">
           <h1 className="game-title ">Popular Games</h1>
-          {gameData.slice(currentIndex, currentIndex + itemsPerPage).map((game) => (
-            <div className="card-game-popular " key={game.id}>
-              <button>
-              <img
-                className="card-popular-img "
-                src={game.imagePortrait}
-                alt={game.title}
-              />
-              </button>
-              
-              <p className="pt-4 font-semibold">{game.title}</p>
-              <p className="">{game.price}</p>
-            </div>
-          ))}
-          <div  className="slider-buttons ">
+          {gameData
+            .slice(currentIndex, currentIndex + itemsPerPage)
+            .map((game) => (
+              <div className="card-game-popular " key={game.id}>
+                <button>
+                  <img
+                    className="card-popular-img "
+                    src={game.imagePortrait}
+                    alt={game.title}
+                  />
+                </button>
+
+                <p className="pt-4 font-semibold">{game.title}</p>
+                <p className="">{game.price}</p>
+              </div>
+            ))}
+          <div className="slider-buttons ">
             <button onClick={prevSlide} disabled={currentIndex === 0}>
               <i className="fa-solid fa-chevron-left"></i>
             </button>
-            <button onClick={nextSlide} disabled={currentIndex + itemsPerPage >= totalGames}>
+            <button
+              onClick={nextSlide}
+              disabled={currentIndex + itemsPerPage >= totalGames}
+            >
               <i className="fa-solid fa-chevron-right"></i>
             </button>
           </div>
@@ -87,14 +92,20 @@ const HomePage = () => {
         ))}
       </div>
       <div className="game-box-popular">
-        <div>
-          
-        </div>
-        <div className="w-2/3 bg-red-400 h-full">
-
-        </div> 
-        <div className="w-1/2  bg-blue-400 h-full">
-
+        <div className="w-11/12 flex  h-full ">
+          {/* <div className="w-7/12 bg-blue-400 h-full">
+a
+          </div> */}
+          <div
+            className="w-full h-full animate-scroll bg-cover flex flex-col items-center justify-center p-6 text-white bg-center"
+          >
+            <h1  className="text-6xl font-bold ">Sell & Buy Unity Game Assets</h1>
+            <p className="mt-2 text-xl text-center">
+              Discover high-quality game assets for Unity, from 3D models to
+              textures, animations, and UI elements. Start building your dream
+              game today!
+            </p>
+          </div>
         </div>
       </div>
     </div>
