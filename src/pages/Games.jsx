@@ -12,7 +12,6 @@ const Games = () => {
   const playerOptions = ["Singleplayer", "Multiplayer"];
   const gamesPerPage =12;
   const [loading, setLoading] = useState(false);
-
   const [wishlist, toggleWishlist] = useState([]);
   const [filteredGames, setFilteredGames] = useState(gameData);
   const [selectedGenres, setSelectedGenres] = useState([]);
@@ -72,8 +71,6 @@ const Games = () => {
 
   useEffect(() => {
     setLoading(true); // Bắt đầu loading khi filter/sort thay đổi
-
-    let filtered = [...gameData];
 
     setTimeout(() => {
       let filtered = [...gameData];
@@ -144,6 +141,8 @@ const Games = () => {
       setTimeout(() => {
         setCurrentPage((prev) => prev + 1);
         setLoading(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
       }, 500);
     }
   };
@@ -154,6 +153,8 @@ const Games = () => {
       setTimeout(() => {
         setCurrentPage((prev) => prev - 1);
         setLoading(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
       }, 500);
     }
   };
@@ -218,7 +219,7 @@ const Games = () => {
             />
           </div>
           {loading ? (
-            <div className="flex justify-center items-center w-full h-40">
+            <div className="flex justify-center items-center w-full h-[600px]">
               <span class="loader"></span>
             </div>
           ) : (
@@ -266,7 +267,7 @@ const Games = () => {
             <button
               onClick={prevPage}
               disabled={currentPage === 1}
-              className="px-4 py-2 mx-2 bg-gray-700 text-white rounded disabled:opacity-50"
+              className="px-4 py-2 mx-2 bg-gray-700 hover:bg-gray-600 text-white rounded disabled:opacity-50"
             >
               Previous
             </button>
@@ -276,7 +277,7 @@ const Games = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 mx-2 bg-gray-700 text-white rounded disabled:opacity-50"
+              className="px-4 py-2 mx-2 bg-gray-700 hover:bg-gray-600 text-white rounded disabled:opacity-50"
             >
               Next
             </button>
