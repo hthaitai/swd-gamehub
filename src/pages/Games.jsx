@@ -4,6 +4,7 @@ import FilterDropdown from "../components/FilterDropdown";
 import SortDropdown from "../components/SortDropdown";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import { Link } from "react-router-dom";
 
 const Games = () => {
   const genreOptions = ["Action", "RPG", "Open World"];
@@ -159,8 +160,8 @@ const Games = () => {
     }
   };
   return (
-    <div className="flex mt-[84px]">
-      <div className="mt-10 px-4">
+    <div className="flex gap-4 mt-[84px] p-4">
+      <div className="mt-10">
         <div className="relative mb-[22px]">
           <input
             className="text-sm bg-[#202024] border-b border-[#9A9A9A] focus:outline-none focus:border-white h-9 w-[280px] pl-4 rounded-md"
@@ -211,7 +212,7 @@ const Games = () => {
       </div>
 
       <div className="mx-auto">
-        <div className="mt-10 flex flex-col gap-8 w-[1200px]">
+        <div className="mt-10 flex flex-col gap-8 max-w-[1200px] w-full">
           <div className="flex justify-end flex-1">
             <SortDropdown
               sortOption={sortOption}
@@ -255,7 +256,7 @@ const Games = () => {
                     </div>
                   </div>
                   <div className="py-2 w-[300px]">
-                    <p className="font-medium">{game.title}</p>
+                    <Link to={`/games/${game.id}`}><p className="font-medium">{game.title}</p></Link>
                     <p className="text-sm text-gray-300">{game.price}</p>
                   </div>{" "}
                 </div>
