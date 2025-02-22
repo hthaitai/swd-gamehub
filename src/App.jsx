@@ -6,6 +6,7 @@ import Layout from "./pages/Layout"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import "./css/styles.css"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/assets" element={<Assets />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

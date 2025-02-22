@@ -216,7 +216,7 @@ const Assets = () => {
             <button
               onClick={nextPage}
               disabled={currentPage === totalPages}
-              className="px-4 py-2 mx-2 bg-gray-700  text-white rounded disabled:opacity-50"
+              className="px-4 py-2 mx-2 bg-gray-700 hover:bg-gray-600 text-white rounded disabled:opacity-50"
             >
               Next
             </button>
