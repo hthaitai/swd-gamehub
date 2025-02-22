@@ -8,6 +8,7 @@ import Register from "./pages/Register"
 import "./css/styles.css"
 import GameDetail from "./pages/GameDetail"
 import games from "./data/gameData"
+import Profile from "./pages/Profile"
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/assets" element={<Assets />} />
           <Route path="/login" element={<Login gameData={games}/>} />
           <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
       </Routes>
     </Router>

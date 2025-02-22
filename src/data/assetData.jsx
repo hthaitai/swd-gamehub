@@ -130,6 +130,137 @@ const assetData = [
       type: "3D",
       uploadDate: "2024-01-17",
       lastUpdated: "2024-02-11"
+    } ,{
+      id: 13,
+      title: "Hand-Painted Dungeon Tileset",
+      description: "A beautifully crafted dungeon tileset for 2D games.",
+      image: "https://marketplacecdn.yoyogames.com/images/assets/2881/screenshots/6957_original.jpg?1445828306",
+      price: 17.99,
+      downloads: 8,
+      type: "2D",
+      uploadDate: "2024-02-01",
+      lastUpdated: "2024-02-18"
+    },
+    {
+      id: 14,
+      title: "Space Battle Effects Pack",
+      description: "High-energy particle effects for space battles.",
+      image: "https://i0.wp.com/2minutetabletop.com/wp-content/uploads/2023/10/Battle-Damage-Assets-Large-preview.jpg?fit=1080%2C782&ssl=1",
+      price: 19.99,
+      downloads: 7,
+      type: "2D",
+      uploadDate: "2024-01-28",
+      lastUpdated: "2024-02-15"
+    },
+    {
+      id: 15,
+      title: "Post-Apocalyptic City Pack",
+      description: "A ruined cityscape for survival games.",
+      image: "https://i.imgur.com/U3GkWR9.png",
+      price: 34.99,
+      downloads: 3,
+      type: "3D",
+      uploadDate: "2024-01-18",
+      lastUpdated: "2024-02-12"
+    },
+    {
+      id: 16,
+      title: "Pixel Art Character Pack",
+      description: "A diverse set of pixel-art characters for RPGs.",
+      image: "https://cdn.dribbble.com/userupload/10650323/file/original-304c7a3b7fdec5a910fa83004b9041c1.jpg",
+      price: 12.99,
+      downloads: 9,
+      type: "2D",
+      uploadDate: "2024-02-03",
+      lastUpdated: "2024-02-14"
+    },
+    {
+      id: 17,
+      title: "Stylized Forest Pack",
+      description: "A vibrant forest environment for open-world games.",
+      image: "https://cdn1.epicgames.com/ue/product/Screenshot/StylizedForestPackExample-13-1920x1080-2a2a74da63b6f3dc7f3aab0860bb5d51.jpg?resize=1&w=1920",
+      price: "Free",
+      downloads: 15,
+      type: "3D",
+      uploadDate: "2024-02-07",
+      lastUpdated: "2024-02-19"
+    },
+    {
+      id: 18,
+      title: "Modular Sci-Fi Interiors",
+      description: "A flexible set of sci-fi interior assets for space stations.",
+      image: "https://cdn1.epicgames.com/ue/product/Screenshot/001-1920x1080-ed9b6c5b451ae24bcf0d9b056a72564f.jpg?resize=1&w=1920",
+      price: 44.99,
+      downloads: 4,
+      type: "3D",
+      uploadDate: "2024-01-29",
+      lastUpdated: "2024-02-16"
+    },
+    {
+      id: 19,
+      title: "Fantasy Spell Effects",
+      description: "A collection of stunning magic effects for RPGs.",
+      image: "https://assetstorev1-prd-cdn.unity3d.com/package-screenshot/fb59f979-c806-4c10-92cd-abdf6785af30_scaled.jpg",
+      price: 22.99,
+      downloads: 6,
+      type: "2D",
+      uploadDate: "2024-01-25",
+      lastUpdated: "2024-02-13"
+    },
+    {
+      id: 20,
+      title: "Retro Racing Car Pack",
+      description: "Classic low-poly cars for retro-style racing games.",
+      image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTgAU53a7G6Zg2e12Y8KnhvTy4T2KoyFPHlRA&s",
+      price: 29.99,
+      downloads: 3,
+      type: "3D",
+      uploadDate: "2024-02-04",
+      lastUpdated: "2024-02-17"
+    },
+    {
+      id: 21,
+      title: "Anime Character Portraits",
+      description: "A set of high-quality anime-style character portraits.",
+      image: "https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/147742735/original/2d734c2f107db1245f63decb6c551dcea5e5091d/create-pixel-art-character-sprite-for-your-game.png",
+      price: 14.99,
+      downloads: 11,
+      type: "2D",
+      uploadDate: "2024-02-10",
+      lastUpdated: "2024-02-18"
+    },
+    {
+      id: 22,
+      title: "Cyberpunk Vehicles Pack",
+      description: "A futuristic set of vehicles perfect for cyberpunk settings.",
+      image: "https://media.fab.com/image_previews/gallery_images/55c1933a-a50e-485e-8dd4-6afeb007a7ba/d96fe019-65c5-4b45-8bc8-6de137c6cb21.jpg",
+      price: 39.99,
+      downloads: 2,
+      type: "3D",
+      uploadDate: "2024-01-30",
+      lastUpdated: "2024-02-14"
+    },
+    {
+      id: 23,
+      title: "Underground Bunker Kit",
+      description: "A modular bunker set for survival and horror games.",
+      image: "https://assetstorev1-prd-cdn.unity3d.com/key-image/e41f73ee-b9aa-4c10-83b6-15addc87b42b.jpg",
+      price: 26.99,
+      downloads: 5,
+      type: "3D",
+      uploadDate: "2024-02-06",
+      lastUpdated: "2024-02-16"
+    },
+    {
+      id: 24,
+      title: "Chibi Character Pack",
+      description: "Cute and detailed chibi characters for mobile games.",
+      image: "https://europe1.discourse-cdn.com/unity/original/4X/3/e/b/3eb799de6544c471b29867594f4605e168948156.jpeg",
+      price: 18.99,
+      downloads: 8,
+      type: "2D",
+      uploadDate: "2024-02-09",
+      lastUpdated: "2024-02-19"
     }
   ];
   

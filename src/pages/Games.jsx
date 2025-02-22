@@ -1,116 +1,126 @@
-import React, { useEffect, useState } from "react"
-import gameData from "../data/gameData"
-import FilterDropdown from "../components/FilterDropdown"
-import FadeContent from "../components/Animations/FadeContent"
-import SortDropdown from "../components/SortDropdown"
-import { Link } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import gameData from "../data/gameData";
+import FilterDropdown from "../components/FilterDropdown";
+import SortDropdown from "../components/SortDropdown";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const Games = () => {
-  const genreOptions = ["Action", "RPG", "Open World"]
-  const platformOptions = ["PC", "PlayStation", "Xbox"]
-  const priceOptions = ["Free", "Paid"]
-  const playerOptions = ["Singleplayer", "Multiplayer"]
-
-  const [wishlist, toggleWishlist] = useState([])
-  const [filteredGames, setFilteredGames] = useState(gameData)
-  const [selectedGenres, setSelectedGenres] = useState([])
-  const [selectedPlatforms, setSelectedPlatforms] = useState([])
-  const [selectedPrices, setSelectedPrices] = useState([])
-  const [selectedPlayers, setSelectedPlayers] = useState([])
-  const [search, setSearch] = useState("")
-  const [sortOption, setSortOption] = useState("New Release")
+  const genreOptions = ["Action", "RPG", "Open World"];
+  const platformOptions = ["PC", "PlayStation", "Xbox"];
+  const priceOptions = ["Free", "Paid"];
+  const playerOptions = ["Singleplayer", "Multiplayer"];
+  const gamesPerPage =12;
+  const [loading, setLoading] = useState(false);
+  const [wishlist, toggleWishlist] = useState([]);
+  const [filteredGames, setFilteredGames] = useState(gameData);
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [selectedPlatforms, setSelectedPlatforms] = useState([]);
+  const [selectedPrices, setSelectedPrices] = useState([]);
+  const [selectedPlayers, setSelectedPlayers] = useState([]);
+  const [search, setSearch] = useState("");
+  const [sortOption, setSortOption] = useState("New Release");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleSearch = (e) => {
-    setSearch(e.target.value)
-  }
+    setSearch(e.target.value);
+  };
 
   const handleSortChange = (option) => {
-    setSortOption(option)
-  }
+    setSortOption(option);
+  };
 
   const handleGenreSelect = (option) => {
     setSelectedGenres((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    )
-  }
+    );
+  };
 
   const handlePlatformSelect = (option) => {
     setSelectedPlatforms((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    )
-  }
+    );
+  };
 
   const handlePriceSelect = (option) => {
     setSelectedPrices((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    )
-  }
+    );
+  };
 
   const handlePlayerSelect = (option) => {
     setSelectedPlayers((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    )
-  }
+    );
+  };
 
   const clearFilters = () => {
-    setSelectedGenres([])
-    setSelectedPlatforms([])
-    setSelectedPrices([])
-    setSelectedPlayers([])
-  }
+    setSelectedGenres([]);
+    setSelectedPlatforms([]);
+    setSelectedPrices([]);
+    setSelectedPlayers([]);
+  };
 
   useEffect(() => {
-    let filtered = [...gameData]
+    setLoading(true); // Bắt đầu loading khi filter/sort thay đổi
 
-    if (search.trim() !== "") {
-      filtered = filtered.filter((game) =>
-        game.title.toLowerCase().includes(search.toLowerCase())
-      )
-    }
+    setTimeout(() => {
+      let filtered = [...gameData];
 
-    if (selectedGenres.length > 0) {
-      filtered = filtered.filter((game) => selectedGenres.includes(game.genre))
-    }
+      if (search.trim() !== "") {
+        filtered = filtered.filter((game) =>
+          game.title.toLowerCase().includes(search.toLowerCase())
+        );
+      }
 
-    if (selectedPlatforms.length > 0) {
-      filtered = filtered.filter((game) =>
-        selectedPlatforms.includes(game.platform)
-      )
-    }
+      if (selectedGenres.length > 0) {
+        filtered = filtered.filter((game) =>
+          selectedGenres.includes(game.genre)
+        );
+      }
 
-    if (selectedPrices.length > 0) {
-      filtered = filtered.filter((game) =>
-        selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
-      )
-    }
+      if (selectedPlatforms.length > 0) {
+        filtered = filtered.filter((game) =>
+          selectedPlatforms.includes(game.platform)
+        );
+      }
 
-    if (selectedPlayers.length > 0) {
-      filtered = filtered.filter((game) =>
-        selectedPlayers.includes(game.playerSupport)
-      )
-    }
+      if (selectedPrices.length > 0) {
+        filtered = filtered.filter((game) =>
+          selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
+        );
+      }
 
-    if (sortOption === "Most Downloaded") {
-      filtered = filtered.sort((a, b) => b.downloads - a.downloads)
-    } else if (sortOption === "New Release") {
-      filtered = filtered.sort(
-        (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
-      )
-    } else if (sortOption === "Last Updated") {
-      filtered = filtered.sort(
-        (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
-      )
-    }
+      if (selectedPlayers.length > 0) {
+        filtered = filtered.filter((game) =>
+          selectedPlayers.includes(game.playerSupport)
+        );
+      }
 
-    setFilteredGames(filtered)
+      if (sortOption === "Most Downloaded") {
+        filtered = filtered.sort((a, b) => b.downloads - a.downloads);
+      } else if (sortOption === "New Release") {
+        filtered = filtered.sort(
+          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
+        );
+      } else if (sortOption === "Last Updated") {
+        filtered = filtered.sort(
+          (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
+        );
+      }
+
+      setCurrentPage(1);
+      setFilteredGames(filtered);
+      setLoading(false); // Kết thúc loading
+    }, 500); // Giả lập thời gian loading
   }, [
     selectedGenres,
     selectedPlatforms,
@@ -118,8 +128,36 @@ const Games = () => {
     selectedPlayers,
     search,
     sortOption,
-  ])
+  ]);
 
+  const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setLoading(true);
+      setTimeout(() => {
+        setCurrentPage((prev) => prev + 1);
+        setLoading(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      }, 500);
+    }
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setLoading(true);
+      setTimeout(() => {
+        setCurrentPage((prev) => prev - 1);
+        setLoading(false);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+
+      }, 500);
+    }
+  };
   return (
     <div className="flex mt-[84px]">
       <div className="mt-10 px-4">
@@ -180,58 +218,74 @@ const Games = () => {
               onSortChange={handleSortChange}
             />
           </div>
+          {loading ? (
+            <div className="flex justify-center items-center w-full h-[600px]">
+              <span class="loader"></span>
+            </div>
+          ) : (
+            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+              {currentGames.map((game) => (
+                <div key={game.id}>
+                  <div className="relative max-w-[400px] h-auto group overflow-hidden">
+                    <LazyLoadImage
+                      className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
+                      src={game.image}
+                      alt="Game"
+                      effect="scroll"
+                    />
 
-          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {filteredGames.map((game, index) => (
-              <FadeContent
-                blur={true}
-                duration={1000}
-                easing="ease-out"
-                initialOpacity={0}
-                delay={index * 150}
-                key={game.id}
-              >
-                <div className="relative max-w-[400px] h-auto group overflow-hidden">
-                  <img
-                    className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
-                    src={game.image}
-                    alt="Game"
-                  />
+                    <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
+                      <button title="Add to cart" className="hover:text-white">
+                        <i className="fa-solid fa-cart-shopping text-xs"></i>
+                      </button>
 
-                  <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
-                    <button title="Add to cart" className="hover:text-white">
-                      <i className="fa-solid fa-cart-shopping text-xs"></i>
-                    </button>
-
-                    <button
-                      title="Add to wishlist"
-                      className="hover:text-white"
-                      onClick={() => toggleWishlist(game.id)}
-                    >
-                      <i
-                        className={
-                          wishlist.includes(game.id)
-                            ? "fa-solid fa-heart text-red-500 text-xs"
-                            : "fa-regular fa-heart text-xs"
-                        }
-                      ></i>
-                    </button>
+                      <button
+                        title="Add to wishlist"
+                        className="hover:text-white"
+                        onClick={() => toggleWishlist(game.id)}
+                      >
+                        <i
+                          className={
+                            wishlist.includes(game.id)
+                              ? "fa-solid fa-heart text-red-500 text-xs"
+                              : "fa-regular fa-heart text-xs"
+                          }
+                        ></i>
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div className="py-2 w-[300px]">
-                  <Link to={`/games/${game.id}`}>
+                  <div className="py-2 w-[300px]">
                     <p className="font-medium">{game.title}</p>
-                  </Link>
-                  <p className="text-sm text-gray-300">{game.price}</p>
+                    <p className="text-sm text-gray-300">{game.price}</p>
+                  </div>{" "}
                 </div>
-              </FadeContent>
-            ))}
+              ))}
+            </div>
+          )}
+
+          <div className="flex justify-center items-center">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className="px-4 py-2 mx-2 bg-gray-700 hover:bg-gray-600 text-white rounded disabled:opacity-50"
+            >
+              Previous
+            </button>
+            <span className="text-white">
+              {currentPage} / {totalPages}
+            </span>
+            <button
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 mx-2 bg-gray-700 hover:bg-gray-600 text-white rounded disabled:opacity-50"
+            >
+              Next
+            </button>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Games
+export default Games;
