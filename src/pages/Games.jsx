@@ -3,6 +3,7 @@ import gameData from "../data/gameData"
 import FilterDropdown from "../components/FilterDropdown"
 import FadeContent from "../components/Animations/FadeContent"
 import SortDropdown from "../components/SortDropdown"
+import { Link } from "react-router-dom"
 
 const Games = () => {
   const genreOptions = ["Action", "RPG", "Open World"]
@@ -219,7 +220,9 @@ const Games = () => {
                 </div>
 
                 <div className="py-2 w-[300px]">
-                  <p className="font-medium">{game.title}</p>
+                  <Link to={`/games/${game.id}`}>
+                    <p className="font-medium">{game.title}</p>
+                  </Link>
                   <p className="text-sm text-gray-300">{game.price}</p>
                 </div>
               </FadeContent>

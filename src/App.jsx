@@ -6,6 +6,8 @@ import Layout from "./pages/Layout"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import "./css/styles.css"
+import GameDetail from "./pages/GameDetail"
+import games from "./data/gameData"
 
 function App() {
   return (
@@ -14,8 +16,9 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="/games" element={<Games />} />
+          <Route path="/games/:id" element={<GameDetail />} />
           <Route path="/assets" element={<Assets />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login gameData={games}/>} />
           <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
