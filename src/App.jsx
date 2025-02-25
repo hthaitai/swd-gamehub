@@ -9,6 +9,7 @@ import "./css/styles.css"
 import GameDetail from "./pages/GameDetail"
 import games from "./data/gameData"
 import Profile from "./pages/Profile"
+import AssetDetail from "./pages/AssetDetail"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetail />} />
           <Route path="/assets" element={<Assets />} />
+          <Route path="/assets/:id" element={<AssetDetail />} />
           <Route path="/login" element={<Login gameData={games}/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />

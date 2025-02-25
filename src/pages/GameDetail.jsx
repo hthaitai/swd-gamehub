@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import games from "../data/gameData"
 import { ThumbsDown, ThumbsUp } from "lucide-react"
@@ -11,7 +11,7 @@ const GameDetail = () => {
 
   const [reviews, setReviews] = useState([])
   const [reviewText, setReviewText] = useState("")
-
+  const [loading, setLoading] = useState(true);
   const imageUrls = [
     "https://picsum.photos/400/300?random=1",
     "https://picsum.photos/400/300?random=2",
@@ -58,7 +58,19 @@ const GameDetail = () => {
       )
     )
   }
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  },[]);
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center w-full h-screen">
+        <span className="loader"></span>
+      </div>
+    );
+  }
   return (
     <div className="mt-[84px]">
       {/* Game header */}

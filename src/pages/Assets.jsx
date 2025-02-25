@@ -3,6 +3,7 @@ import assetData from "../data/assetData";
 import FilterDropdown from "../components/FilterDropdown";
 import SortDropdown from "../components/SortDropdown";
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import { Link } from "react-router-dom";
 
 const Assets = () => {
   const priceOptions = ["Free", "Paid"];
@@ -195,8 +196,11 @@ const Assets = () => {
                   </div>
 
                   <div className="py-2 w-[300px]">
+                    <Link to={`/assets/${asset.id}`}>
                     <p className="font-medium">{asset.title}</p>
-                    <p className="text-sm text-gray-300">{asset.price}</p>
+
+                    </Link>
+                    <p className="text-sm text-gray-300">${asset.price}</p>
                   </div>
                 </div>
               ))}

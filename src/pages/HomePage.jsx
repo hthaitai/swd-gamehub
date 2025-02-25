@@ -61,6 +61,8 @@ const HomePage = () => {
             .slice(currentIndex, currentIndex + itemsPerPage)
             .map((game) => (
               <div className="card-game-popular " key={game.id}>
+                
+                <Link to={`/games/${game.id}`}>
                 <button>
                   <LazyLoadImage
                     className="card-popular-img "
@@ -69,6 +71,7 @@ const HomePage = () => {
                     effect="blur"
                   />
                 </button>
+                </Link>
 
                 <p className="pt-4 font-semibold">{game.title}</p>
                 <p className="">{game.price}</p>
@@ -115,12 +118,15 @@ const HomePage = () => {
             .filter((game) => game.price === "Free")
             .map((game) => (
               <SwiperSlide key={game.id}>
+                <Link to={`/games/${game.id}`}>
                 <button className="card-free-game">
                   <img src={game.image} alt={game.title} />
                   <div className="game-free-title">
                     <p>{game.title}</p>
                   </div>
                 </button>
+                </Link>
+              
               </SwiperSlide>
             ))}
         </Swiper>
