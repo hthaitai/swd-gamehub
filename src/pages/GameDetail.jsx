@@ -114,7 +114,7 @@ const GameDetail = () => {
 
           <p className="text-sm text-gray-300">{game.description}</p>
 
-          <button className="border text-sm p-3 rounded-md bg-white text-black font-medium max-w-[120px] w-full">
+          <button className="border text-sm p-3 rounded-md bg-white hover:scale-95 transition hover:bg-gray-300 text-black font-medium max-w-[120px] w-full">
             Buy for {game.price}
           </button>
         </div>

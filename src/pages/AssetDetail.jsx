@@ -3,13 +3,13 @@ import assets from "../data/assetData";
 import { useParams } from "react-router-dom";
 function AssetDetail() {
   const { id } = useParams();
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const asset = assets.find((a) => a.id.toString() === id);
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 500);
-  },[]);
+  }, []);
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
@@ -52,13 +52,16 @@ function AssetDetail() {
           </div>
           {/* title */}
           <div className=" ml-5  w-[450px]">
-            <div className=" font-semibold text-[38px]">
-              {asset.title}
-            </div>
+            <div className=" font-semibold text-[38px]">{asset.title}</div>
             <div className="border-2 my-4 border-gray-600 "></div>
 
             <div className=" mt-14 flex flex-col gap-y-5">
-              <div className=" text-[35px] font-mono">${asset.price}</div>
+              <div className="flex">
+              
+                <button className="text-[20px] font-mono bg-white hover:scale-95 transition hover:bg-gray-300 text-black font-bold py-2 px-4 rounded">
+                Buy for {asset.price}
+                </button>
+              </div>
               <div className=" text-[25px] font-normal">
                 {" "}
                 {asset.description}{" "}
@@ -72,13 +75,10 @@ function AssetDetail() {
                 {" "}
                 <span className="font-semibold ">Type:</span> {asset.type}{" "}
               </div>
-              <div className=" text-[25px] border-b-2 border-gray-600">
+              <div className=" text-[25px] ">
                 {" "}
-                <span className="font-semibold ">Uploaded:</span> {asset.uploadDate}{" "}
-              </div>
-              <div className=" text-[25px] border-gray-600">
-                {" "}
-                <span className="font-semibold ">Last Updated:</span> {asset.lastUpdated}{" "}
+                <span className="font-semibold ">Uploaded:</span>{" "}
+                {asset.uploadDate}{" "}
               </div>
             </div>
           </div>

@@ -200,7 +200,7 @@ const Assets = () => {
                     <p className="font-medium">{asset.title}</p>
 
                     </Link>
-                    <p className="text-sm text-gray-300">${asset.price}</p>
+                    <p className="text-sm text-gray-300">{asset.price}</p>
                   </div>
                 </div>
               ))}
