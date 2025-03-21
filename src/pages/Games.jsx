@@ -5,13 +5,13 @@ import SortDropdown from "../components/SortDropdown";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
-
+import gameService from "../api/gameService";
 const Games = () => {
   const genreOptions = ["Action", "RPG", "Open World"];
   const platformOptions = ["PC", "PlayStation", "Xbox"];
   const priceOptions = ["Free", "Paid"];
   const playerOptions = ["Singleplayer", "Multiplayer"];
-  const gamesPerPage =12;
+  const gamesPerPage = 12;
   const [loading, setLoading] = useState(false);
   const [wishlist, toggleWishlist] = useState([]);
   const [filteredGames, setFilteredGames] = useState(gameData);
@@ -23,6 +23,19 @@ const Games = () => {
   const [sortOption, setSortOption] = useState("New Release");
   const [currentPage, setCurrentPage] = useState(1);
 
+  useEffect(() => {
+    setLoading(true);
+    gameService
+      .getGame()
+      .then((response) => {
+        setFilteredGames(response.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error at loading games:", error);
+        setLoading(false);
+      });
+  }, []);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -69,59 +82,64 @@ const Games = () => {
     setSelectedPrices([]);
     setSelectedPlayers([]);
   };
-
   useEffect(() => {
-    setLoading(true); // Bắt đầu loading khi filter/sort thay đổi
+    setLoading(true);
 
-    setTimeout(() => {
-      let filtered = [...gameData];
+    gameService
+      .getGame()
+      .then((response) => {
+        let filtered = response.data;
 
-      if (search.trim() !== "") {
-        filtered = filtered.filter((game) =>
-          game.title.toLowerCase().includes(search.toLowerCase())
-        );
-      }
+        if (search.trim() !== "") {
+          filtered = filtered.filter((game) =>
+            game.title.toLowerCase().includes(search.toLowerCase())
+          );
+        }
 
-      if (selectedGenres.length > 0) {
-        filtered = filtered.filter((game) =>
-          selectedGenres.includes(game.genre)
-        );
-      }
+        if (selectedGenres.length > 0) {
+          filtered = filtered.filter((game) =>
+            selectedGenres.includes(game.genre)
+          );
+        }
 
-      if (selectedPlatforms.length > 0) {
-        filtered = filtered.filter((game) =>
-          selectedPlatforms.includes(game.platform)
-        );
-      }
+        if (selectedPlatforms.length > 0) {
+          filtered = filtered.filter((game) =>
+            selectedPlatforms.includes(game.platform)
+          );
+        }
 
-      if (selectedPrices.length > 0) {
-        filtered = filtered.filter((game) =>
-          selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
-        );
-      }
+        if (selectedPrices.length > 0) {
+          filtered = filtered.filter((game) =>
+            selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
+          );
+        }
 
-      if (selectedPlayers.length > 0) {
-        filtered = filtered.filter((game) =>
-          selectedPlayers.includes(game.playerSupport)
-        );
-      }
+        if (selectedPlayers.length > 0) {
+          filtered = filtered.filter((game) =>
+            selectedPlayers.includes(game.playerSupport)
+          );
+        }
 
-      if (sortOption === "Most Downloaded") {
-        filtered = filtered.sort((a, b) => b.downloads - a.downloads);
-      } else if (sortOption === "New Release") {
-        filtered = filtered.sort(
-          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
-        );
-      } else if (sortOption === "Last Updated") {
-        filtered = filtered.sort(
-          (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
-        );
-      }
+        if (sortOption === "Most Downloaded") {
+          filtered = filtered.sort((a, b) => b.downloads - a.downloads);
+        } else if (sortOption === "New Release") {
+          filtered = filtered.sort(
+            (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
+          );
+        } else if (sortOption === "Last Updated") {
+          filtered = filtered.sort(
+            (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
+          );
+        }
 
-      setCurrentPage(1);
-      setFilteredGames(filtered);
-      setLoading(false); // Kết thúc loading
-    }, 500); // Giả lập thời gian loading
+        setFilteredGames(filtered);
+        setCurrentPage(1);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải dữ liệu game:", error);
+        setLoading(false);
+      });
   }, [
     selectedGenres,
     selectedPlatforms,
@@ -143,7 +161,6 @@ const Games = () => {
         setCurrentPage((prev) => prev + 1);
         setLoading(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
-
       }, 500);
     }
   };
@@ -155,7 +172,6 @@ const Games = () => {
         setCurrentPage((prev) => prev - 1);
         setLoading(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
-
       }, 500);
     }
   };
@@ -224,13 +240,17 @@ const Games = () => {
               <span class="loader"></span>
             </div>
           ) : (
-            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="gap-3 min-h-[700px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {currentGames.map((game) => (
                 <div key={game.id}>
                   <div className="relative max-w-[400px] h-auto group overflow-hidden">
                     <LazyLoadImage
                       className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
-                      src={game.image}
+                      src={
+                        game.images && game.images.length > 0
+                          ? game.images[0].imageUrl
+                          : "https://via.placeholder.com/300"
+                      }
                       alt="Game"
                       effect="scroll"
                     />
@@ -256,7 +276,9 @@ const Games = () => {
                     </div>
                   </div>
                   <div className="py-2 w-[300px]">
-                    <Link to={`/games/${game.id}`}><p className="font-medium">{game.title}</p></Link>
+                    <Link to={`/games/${game.id}`}>
+                      <p className="font-medium">{game.productTitle}</p>
+                    </Link>
                     <p className="text-sm text-gray-300">{game.price}</p>
                   </div>{" "}
                 </div>

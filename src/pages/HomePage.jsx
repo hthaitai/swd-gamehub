@@ -61,20 +61,21 @@ const HomePage = () => {
             .slice(currentIndex, currentIndex + itemsPerPage)
             .map((game) => (
               <div className="card-game-popular " key={game.id}>
-                
+                                <button>
+
                 <Link to={`/games/${game.id}`}>
-                <button>
                   <LazyLoadImage
                     className="card-popular-img "
                     src={game.imagePortrait}
                     alt={game.title}
                     effect="blur"
                   />
-                </button>
                 </Link>
 
                 <p className="pt-4 font-semibold">{game.title}</p>
                 <p className="">{game.price}</p>
+                </button>
+
               </div>
             ))}
           <div className="slider-buttons ">
@@ -162,12 +163,15 @@ a
               <div key={asset.id}>
                 <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
                   <button className="w-full h-full object-cover rounded-md transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]">
+                    
+                    <Link to={`/assets/${asset.id}`}>
                     <LazyLoadImage
                       className=""
                       src={asset.image}
                       alt="Asset"
                       effect="blur"
                     />
+                    </Link>
                   </button>
                 </div>
                 <div className="py-2 w-[300px]">

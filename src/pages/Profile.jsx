@@ -133,9 +133,9 @@ function Profile() {
           ref={accountSignInRef}
           className="h-[600px] rounded-sm gray-color flex"
         >
-          <div className="w-[480px] flex flex-col">
-            <p className="ml-20 text-6xl font-bold mt-12">Account Sign-In</p>
-            <p className="ml-20 w-[300px] mt-6 font-semibold text-gray-300">
+          <div className="w-[440px] flex flex-col">
+            <p className="ml-10 text-6xl font-bold mt-12">Account Sign-In</p>
+            <p className="ml-10 w-[300px] mt-6 font-semibold text-gray-300">
               We recommend that you periodically update your password to help
               prevent unauthorized access to your account.
             </p>

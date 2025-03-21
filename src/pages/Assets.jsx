@@ -166,9 +166,9 @@ const Assets = () => {
             <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {currentAssets.map((asset) => (
                 <div key={asset.id}>
-                  <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
+                  <div className="relative  group overflow-hidden">
                     <LazyLoadImage
-                      className="w-full h-full object-cover rounded-md duration-300 group-hover:scale-105"
+                      className=" w-[400px] h-[200px] object-cover rounded-md duration-300 group-hover:scale-105"
                       src={asset.image}
                       alt="Asset"
                       effect="scroll"
