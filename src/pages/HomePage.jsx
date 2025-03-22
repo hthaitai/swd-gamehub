@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import gameData from "../data/gameData";
 import assetData from "../data/assetData";
@@ -10,12 +10,33 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
+import productService from "../api/productService";
 
 const HomePage = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const itemsPerPage = 6; // Số game hiển thị trên mỗi slide
   const totalGames = gameData.length;
-  const assets = assetData;
+  const [games, setGames] = useState([]);
+  const [assets, setAssets] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    productService
+      .getProduct()
+      .then((response) => {
+        const filteredGames = response.data.filter(
+          (item) => item.category.id === 1
+        );
+        const filteredAssets = response.data.filter(
+          (item) => item.category.id === 2
+        );
+        setGames(filteredGames);
+        setAssets(filteredAssets);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   const nextSlide = () => {
     if (currentIndex + itemsPerPage < totalGames) {
       setCurrentIndex(currentIndex + itemsPerPage);
@@ -29,7 +50,7 @@ const HomePage = () => {
     }
     return shuffled;
   };
-  
+
   const shuffledAssets = shuffleArray(assets);
   const prevSlide = () => {
     if (currentIndex > 0) {
@@ -57,25 +78,29 @@ const HomePage = () => {
       <div className=" animate-scroll" id="gamelist">
         <div className="flex text-center justify-center game-box-popular">
           <h1 className="game-title ">Popular Games</h1>
-          {gameData
+          {games
             .slice(currentIndex, currentIndex + itemsPerPage)
             .map((game) => (
               <div className="card-game-popular " key={game.id}>
-                                <button>
+                <button>
+                  <Link to={`/games/${game.id}`}>
+                    <LazyLoadImage
+                      className="card-popular-img "
+                      src={
+                        game.images && game.images.length > 0
+                          ? game.images[1].imageUrl
+                          : "https://via.placeholder.com/300"
+                      }
+                      alt={game.productTitle}
+                      effect="blur"
+                    />
+                  </Link>
 
-                <Link to={`/games/${game.id}`}>
-                  <LazyLoadImage
-                    className="card-popular-img "
-                    src={game.imagePortrait}
-                    alt={game.title}
-                    effect="blur"
-                  />
-                </Link>
-
-                <p className="pt-4 font-semibold">{game.title}</p>
-                <p className="">{game.price}</p>
+                  <p className="pt-4 font-bold">{game.productTitle}</p>
+                  <p className="">
+                    {game.price === 0 ? "Free" : `$${game.price}`}
+                  </p>
                 </button>
-
               </div>
             ))}
           <div className="slider-buttons ">
@@ -100,34 +125,39 @@ const HomePage = () => {
         </div>
       </div>
 
-      <div className="container-free ">
-        <h1 className="game-free ">
+      <div className="container-free">
+        <h1 className="game-free">
           Free Games<i className="fa-solid fa-gift pl-4"></i>
         </h1>
         <Swiper
-          modules={[Autoplay]} // Thêm module Autoplay
-          spaceBetween={10}
+          modules={[Autoplay]}
+          spaceBetween={15} // Tăng khoảng cách giữa các card
           speed={5000}
           slidesPerView={3}
           autoplay={{
-            delay: 0, // Tự động chạy sau 3 giây
-            disableOnInteraction: false, // Tiếp tục chạy dù người dùng tương tác
+            delay: 0,
+            disableOnInteraction: false,
           }}
-          loop={true} // Cho phép lặp lại sau khi hết danh sách
+          loop={games.filter((game) => game.price === 0).length > 3} // Kiểm tra số lượng slide để tránh lỗi loop
         >
-          {gameData
-            .filter((game) => game.price === "Free")
+          {games
+            .filter((game) => game.price === 0)
             .map((game) => (
               <SwiperSlide key={game.id}>
-                <Link to={`/games/${game.id}`}>
-                <button className="card-free-game">
-                  <img src={game.image} alt={game.title} />
-                  <div className="game-free-title">
-                    <p>{game.title}</p>
+                <Link to={`/games/${game.id}`} className="block">
+                  <div className="card-free-game">
+                    <img
+                      src={
+                        game.images?.[1]?.imageUrl ||
+                        "https://via.placeholder.com/300"
+                      }
+                      alt={game.productTitle}
+                    />
+                    <div className="game-free-title">
+                      <p>{game.productTitle}</p>
+                    </div>
                   </div>
-                </button>
                 </Link>
-              
               </SwiperSlide>
             ))}
         </Swiper>
@@ -163,20 +193,22 @@ a
               <div key={asset.id}>
                 <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
                   <button className="w-full h-full object-cover rounded-md transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]">
-                    
                     <Link to={`/assets/${asset.id}`}>
-                    <LazyLoadImage
-                      className=""
-                      src={asset.image}
-                      alt="Asset"
-                      effect="blur"
-                    />
+                      <LazyLoadImage
+                        className=""
+                        src={
+                          asset.images?.[1]?.imageUrl ||
+                          "https://via.placeholder.com/300"
+                        }
+                        alt="Asset"
+                        effect="blur"
+                      />
                     </Link>
                   </button>
                 </div>
                 <div className="py-2 w-[300px]">
-                  <p className="font-medium">{asset.title}</p>
-                  <p className="text-sm text-gray-300">{asset.price}</p>
+                  <p className="font-medium">{asset.productTitle}</p>
+                  <p className="text-sm text-gray-300">${asset.price}</p>
                 </div>
               </div>
             ))}

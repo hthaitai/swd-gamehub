@@ -4,6 +4,7 @@ import FilterDropdown from "../components/FilterDropdown";
 import SortDropdown from "../components/SortDropdown";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Link } from "react-router-dom";
+import productService from "../api/productService";
 
 const Assets = () => {
   const priceOptions = ["Free", "Paid"];
@@ -76,39 +77,33 @@ const Assets = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(() => {
-      let filtered = [...assetData];
-      if (search.trim() !== "") {
-        filtered = filtered.filter((asset) =>
-          asset.title.toLowerCase().includes(search.toLowerCase())
-        );
-      }
+      productService.getProduct().then((response) => {
+        let filtered = response.data.filter((asset) => asset.category.id === 2); // Lọc game
 
-      if (selectedPrices.length > 0) {
-        filtered = filtered.filter((asset) =>
-          selectedPrices.includes(asset.price === "Free" ? "Free" : "Paid")
-        );
-      }
-      if (selectedType.length > 0) {
-        filtered = filtered.filter((asset) =>
-          selectedType.includes(asset.type)
-        );
-      }
+        if (search.trim() !== "") {
+          filtered = filtered.filter((asset) =>
+            asset.title.toLowerCase().includes(search.toLowerCase())
+          );
+        }
 
-      if (sortOption === "Most Downloaded") {
-        filtered = filtered.sort((a, b) => b.downloads - a.downloads);
-      } else if (sortOption === "New Release") {
-        filtered = filtered.sort(
-          (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
-        );
-      } else if (sortOption === "Last Updated") {
-        filtered = filtered.sort(
-          (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
-        );
-      }
-
-      setFilteredAssets(filtered);
-      setCurrentPage(1);
-      setLoading(false); // Kết thúc loading
+        if (selectedPrices.length > 0) {
+          filtered = filtered.filter((asset) =>
+            selectedPrices.includes(asset.price === 0 ? "Free" : "Paid")
+          );
+        }
+        if (sortOption === "New Release") {
+          filtered = filtered.sort(
+            (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+          );
+        } else if (sortOption === "New Upload") {
+          filtered = filtered.sort(
+            (a, b) => new Date(b.createAt) - new Date(a.createAt)
+          );
+        }
+        setFilteredAssets(filtered);
+        setCurrentPage(1);
+        setLoading(false);
+      });
     }, 500);
   }, [selectedPrices, search, sortOption, selectedType]);
 
@@ -160,16 +155,20 @@ const Assets = () => {
           </div>
           {loading ? (
             <div className="flex justify-center items-center w-full h-[600px]">
-              <span class="loader"></span>
+              <span className="loader"></span>
             </div>
           ) : (
-            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="gap-3 grid min-h-[700px]  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {currentAssets.map((asset) => (
                 <div key={asset.id}>
                   <div className="relative  group overflow-hidden">
                     <LazyLoadImage
                       className=" w-[400px] h-[200px] object-cover rounded-md duration-300 group-hover:scale-105"
-                      src={asset.image}
+                      src={
+                        asset.images && asset.images.length > 0
+                          ? asset.images[0].imageUrl
+                          : "https://via.placeholder.com/300"
+                      }
                       alt="Asset"
                       effect="scroll"
                     />
@@ -197,10 +196,11 @@ const Assets = () => {
 
                   <div className="py-2 w-[300px]">
                     <Link to={`/assets/${asset.id}`}>
-                    <p className="font-medium">{asset.title}</p>
-
+                      <p className="font-medium">{asset.productTitle}</p>
                     </Link>
-                    <p className="text-sm text-gray-300">{asset.price}</p>
+                    <p className="text-sm text-gray-300 font-semibold">
+                      ${asset.price}
+                    </p>
                   </div>
                 </div>
               ))}

@@ -5,7 +5,7 @@ import SortDropdown from "../components/SortDropdown";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { Link } from "react-router-dom";
-import gameService from "../api/gameService";
+import productService from "../api/productService";
 const Games = () => {
   const genreOptions = ["Action", "RPG", "Open World"];
   const platformOptions = ["PC", "PlayStation", "Xbox"];
@@ -22,20 +22,6 @@ const Games = () => {
   const [search, setSearch] = useState("");
   const [sortOption, setSortOption] = useState("New Release");
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    setLoading(true);
-    gameService
-      .getGame()
-      .then((response) => {
-        setFilteredGames(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error at loading games:", error);
-        setLoading(false);
-      });
-  }, []);
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
@@ -84,62 +70,60 @@ const Games = () => {
   };
   useEffect(() => {
     setLoading(true);
+    setTimeout(() => {
+      productService
+        .getProduct()
+        .then((response) => {
+          let filtered = response.data.filter((game) => game.category.id === 1); // Lọc game
 
-    gameService
-      .getGame()
-      .then((response) => {
-        let filtered = response.data;
+          if (search.trim() !== "") {
+            filtered = filtered.filter((game) =>
+              game.title.toLowerCase().includes(search.toLowerCase())
+            );
+          }
 
-        if (search.trim() !== "") {
-          filtered = filtered.filter((game) =>
-            game.title.toLowerCase().includes(search.toLowerCase())
-          );
-        }
+          if (selectedGenres.length > 0) {
+            filtered = filtered.filter((game) =>
+              selectedGenres.includes(game.genre)
+            );
+          }
 
-        if (selectedGenres.length > 0) {
-          filtered = filtered.filter((game) =>
-            selectedGenres.includes(game.genre)
-          );
-        }
+          if (selectedPlatforms.length > 0) {
+            filtered = filtered.filter((game) =>
+              selectedPlatforms.includes(game.platform)
+            );
+          }
 
-        if (selectedPlatforms.length > 0) {
-          filtered = filtered.filter((game) =>
-            selectedPlatforms.includes(game.platform)
-          );
-        }
+          if (selectedPrices.length > 0) {
+            filtered = filtered.filter((game) =>
+              selectedPrices.includes(game.price === 0 ? "Free" : "Paid")
+            );
+          }
 
-        if (selectedPrices.length > 0) {
-          filtered = filtered.filter((game) =>
-            selectedPrices.includes(game.price === "Free" ? "Free" : "Paid")
-          );
-        }
+          if (selectedPlayers.length > 0) {
+            filtered = filtered.filter((game) =>
+              selectedPlayers.includes(game.playerSupport)
+            );
+          }
 
-        if (selectedPlayers.length > 0) {
-          filtered = filtered.filter((game) =>
-            selectedPlayers.includes(game.playerSupport)
-          );
-        }
-
-        if (sortOption === "Most Downloaded") {
-          filtered = filtered.sort((a, b) => b.downloads - a.downloads);
-        } else if (sortOption === "New Release") {
-          filtered = filtered.sort(
-            (a, b) => new Date(b.uploadDate) - new Date(a.uploadDate)
-          );
-        } else if (sortOption === "Last Updated") {
-          filtered = filtered.sort(
-            (a, b) => new Date(b.lastUpdated) - new Date(a.lastUpdated)
-          );
-        }
-
-        setFilteredGames(filtered);
-        setCurrentPage(1);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi tải dữ liệu game:", error);
-        setLoading(false);
-      });
+          if (sortOption === "New Release") {
+            filtered = filtered.sort(
+              (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
+            );
+          } else if (sortOption === "New Upload") {
+            filtered = filtered.sort(
+              (a, b) => new Date(b.createAt) - new Date(a.createAt)
+            );
+          }
+          setFilteredGames(filtered);
+          setCurrentPage(1);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi tải dữ liệu game:", error);
+          setLoading(false);
+        });
+    }, 500); // Thêm độ trễ 500ms để tạo hiệu ứng loading
   }, [
     selectedGenres,
     selectedPlatforms,
@@ -228,7 +212,7 @@ const Games = () => {
       </div>
 
       <div className="mx-auto">
-        <div className="mt-10 flex flex-col gap-8 max-w-[1200px] w-full">
+        <div className="mt-10 flex flex-col gap-8 w-[1200px]">
           <div className="flex justify-end flex-1">
             <SortDropdown
               sortOption={sortOption}
@@ -279,7 +263,9 @@ const Games = () => {
                     <Link to={`/games/${game.id}`}>
                       <p className="font-medium">{game.productTitle}</p>
                     </Link>
-                    <p className="text-sm text-gray-300">{game.price}</p>
+                    <p className="text-sm font-semibold text-gray-300">
+                      {game.price === 0 ? "Free" : `$${game.price}`}
+                    </p>
                   </div>{" "}
                 </div>
               ))}
