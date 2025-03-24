@@ -224,7 +224,7 @@ const Games = () => {
               <span class="loader"></span>
             </div>
           ) : (
-            <div className="gap-3 min-h-[700px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="gap-3 min-h-[500px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {currentGames.map((game) => (
                 <div key={game.id}>
                   <div className="relative max-w-[400px] h-auto group overflow-hidden">

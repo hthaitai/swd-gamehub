@@ -129,38 +129,26 @@ const HomePage = () => {
         <h1 className="game-free">
           Free Games<i className="fa-solid fa-gift pl-4"></i>
         </h1>
-        <Swiper
-          modules={[Autoplay]}
-          spaceBetween={15} // Tăng khoảng cách giữa các card
-          speed={5000}
-          slidesPerView={3}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          loop={games.filter((game) => game.price === 0).length > 3} // Kiểm tra số lượng slide để tránh lỗi loop
-        >
-          {games
-            .filter((game) => game.price === 0)
-            .map((game) => (
-              <SwiperSlide key={game.id}>
+        {games
+          .filter((game) => game.price === 0)
+          .map((game) => (
+            <div key={game.id}>
+              <div className="card-free-game">
                 <Link to={`/games/${game.id}`} className="block">
-                  <div className="card-free-game">
-                    <img
-                      src={
-                        game.images?.[1]?.imageUrl ||
-                        "https://via.placeholder.com/300"
-                      }
-                      alt={game.productTitle}
-                    />
-                    <div className="game-free-title">
-                      <p>{game.productTitle}</p>
-                    </div>
+                  <img
+                    src={
+                      game.images?.[1]?.imageUrl ||
+                      "https://via.placeholder.com/300"
+                    }
+                    alt={game.productTitle}
+                  />
+                  <div className="game-free-title">
+                    <p>{game.productTitle}</p>
                   </div>
                 </Link>
-              </SwiperSlide>
-            ))}
-        </Swiper>
+              </div>
+            </div>
+          ))}
       </div>
       <div className="game-box-popular">
         <div className="w-11/12 flex  h-full ">

@@ -171,7 +171,7 @@ html {
   position: relative;
 }
 .card-game-popular {
-  height: 450px;
+  height: 400px;
   width: 220px;
   /* display:flex; */
   border-radius: 5px;
@@ -179,7 +179,7 @@ html {
 }
 .card-popular-img {
   border-radius: 5px;
-  height: 310px; /* Tăng chiều cao để giữ tỷ lệ */
+  height: 290px; /* Tăng chiều cao để giữ tỷ lệ */
   width: 220px; /* Giữ tỷ lệ 2:3 */
   object-fit: cover; /* Đảm bảo hình ảnh hiển thị đầy đủ */
   transition: transform 0.3s ease;
@@ -262,6 +262,9 @@ html {
 }
 .card-free-game {
   margin-top: 25px;
+  margin-right: 25px;
+  margin-left: 25px;
+  gap: 25px;
   border-radius: 10px;
   border: 25px;
   filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.125));
@@ -271,7 +274,7 @@ html {
   justify-content: space-between; /* Để phần title luôn ở dưới */
   text-align: center;
   height: 400px;
-  width: 400px;
+  width: 300px;
   overflow: hidden; /* Ngăn ảnh bị tràn */
 }
 .card-free-game:hover {
