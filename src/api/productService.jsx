@@ -12,6 +12,15 @@ const productService = {
       console.error("Login API error:", error);
       throw error;
     }
+  },
+  signup: async (username, password, email, roleNames) => {
+    try {
+      const data = await api.post("/auth/register", {username,password,email,roleNames});
+      return data;
+    } catch (error) {
+      console.error("Sign Up api error", error);
+      throw error;
+    }
   }
 };
 

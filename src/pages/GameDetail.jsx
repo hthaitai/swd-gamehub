@@ -115,7 +115,7 @@ const GameDetail = () => {
           <p className="text-sm text-gray-300">{game.description}</p>
 
           <a
-            href="http://localhost:5173/checkout"
+            href='/checkout'
             className="border text-sm p-3 rounded-md bg-white hover:scale-95 transition hover:bg-gray-300 text-black font-medium max-w-[120px] w-full"
           >
             Buy for {game.price}
