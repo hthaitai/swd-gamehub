@@ -1,129 +1,133 @@
-import React, { useEffect, useState } from "react";
-import gameData from "../data/gameData";
-import FilterDropdown from "../components/FilterDropdown";
-import SortDropdown from "../components/SortDropdown";
-import { LazyLoadImage } from "react-lazy-load-image-component";
-import "react-lazy-load-image-component/src/effects/blur.css";
-import { Link } from "react-router-dom";
-import productService from "../api/productService";
+import React, { useEffect, useState } from "react"
+import gameData from "../data/gameData"
+import FilterDropdown from "../components/FilterDropdown"
+import SortDropdown from "../components/SortDropdown"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import "react-lazy-load-image-component/src/effects/blur.css"
+import { Link } from "react-router-dom"
+import productService from "../api/productService"
+import { useCart } from "../context/CartContext";
+
 const Games = () => {
-  const genreOptions = ["Action", "RPG", "Open World"];
-  const platformOptions = ["PC", "PlayStation", "Xbox"];
-  const priceOptions = ["Free", "Paid"];
-  const playerOptions = ["Singleplayer", "Multiplayer"];
-  const gamesPerPage = 12;
-  const [loading, setLoading] = useState(false);
-  const [wishlist, toggleWishlist] = useState([]);
-  const [filteredGames, setFilteredGames] = useState(gameData);
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [selectedPlatforms, setSelectedPlatforms] = useState([]);
-  const [selectedPrices, setSelectedPrices] = useState([]);
-  const [selectedPlayers, setSelectedPlayers] = useState([]);
-  const [search, setSearch] = useState("");
-  const [sortOption, setSortOption] = useState("New Release");
-  const [currentPage, setCurrentPage] = useState(1);
+  const genreOptions = ["Action", "RPG", "Open World"]
+  const platformOptions = ["PC", "PlayStation", "Xbox"]
+  const priceOptions = ["Free", "Paid"]
+  const playerOptions = ["Singleplayer", "Multiplayer"]
+  const gamesPerPage = 12
+  const [loading, setLoading] = useState(false)
+  const [wishlist, toggleWishlist] = useState([])
+  const [filteredGames, setFilteredGames] = useState(gameData)
+  const [selectedGenres, setSelectedGenres] = useState([])
+  const [selectedPlatforms, setSelectedPlatforms] = useState([])
+  const [selectedPrices, setSelectedPrices] = useState([])
+  const [selectedPlayers, setSelectedPlayers] = useState([])
+  const [search, setSearch] = useState("")
+  const [sortOption, setSortOption] = useState("New Release")
+  const [currentPage, setCurrentPage] = useState(1)
+  const { addToCart } = useCart();
+
   const handleSearch = (e) => {
-    setSearch(e.target.value);
-  };
+    setSearch(e.target.value)
+  }
 
   const handleSortChange = (option) => {
-    setSortOption(option);
-  };
+    setSortOption(option)
+  }
 
   const handleGenreSelect = (option) => {
     setSelectedGenres((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    );
-  };
+    )
+  }
 
   const handlePlatformSelect = (option) => {
     setSelectedPlatforms((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    );
-  };
+    )
+  }
 
   const handlePriceSelect = (option) => {
     setSelectedPrices((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    );
-  };
+    )
+  }
 
   const handlePlayerSelect = (option) => {
     setSelectedPlayers((prev) =>
       prev.includes(option)
         ? prev.filter((item) => item !== option)
         : [...prev, option]
-    );
-  };
+    )
+  }
 
   const clearFilters = () => {
-    setSelectedGenres([]);
-    setSelectedPlatforms([]);
-    setSelectedPrices([]);
-    setSelectedPlayers([]);
-  };
+    setSelectedGenres([])
+    setSelectedPlatforms([])
+    setSelectedPrices([])
+    setSelectedPlayers([])
+  }
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     setTimeout(() => {
       productService
         .getProduct()
         .then((response) => {
-          let filtered = response.data.filter((game) => game.category.id === 1); // Lọc game
+          let filtered = response.data.filter((game) => game.category.id === 1) // Lọc game
 
           if (search.trim() !== "") {
             filtered = filtered.filter((game) =>
               game.title.toLowerCase().includes(search.toLowerCase())
-            );
+            )
           }
 
           if (selectedGenres.length > 0) {
             filtered = filtered.filter((game) =>
               selectedGenres.includes(game.genre)
-            );
+            )
           }
 
           if (selectedPlatforms.length > 0) {
             filtered = filtered.filter((game) =>
               selectedPlatforms.includes(game.platform)
-            );
+            )
           }
 
           if (selectedPrices.length > 0) {
             filtered = filtered.filter((game) =>
               selectedPrices.includes(game.price === 0 ? "Free" : "Paid")
-            );
+            )
           }
 
           if (selectedPlayers.length > 0) {
             filtered = filtered.filter((game) =>
               selectedPlayers.includes(game.playerSupport)
-            );
+            )
           }
 
           if (sortOption === "New Release") {
             filtered = filtered.sort(
               (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
-            );
+            )
           } else if (sortOption === "New Upload") {
             filtered = filtered.sort(
               (a, b) => new Date(b.createAt) - new Date(a.createAt)
-            );
+            )
           }
-          setFilteredGames(filtered);
-          setCurrentPage(1);
-          setLoading(false);
+          setFilteredGames(filtered)
+          setCurrentPage(1)
+          setLoading(false)
         })
         .catch((error) => {
-          console.error("Lỗi khi tải dữ liệu game:", error);
-          setLoading(false);
-        });
-    }, 500); // Thêm độ trễ 500ms để tạo hiệu ứng loading
+          console.error("Lỗi khi tải dữ liệu game:", error)
+          setLoading(false)
+        })
+    }, 500) // Thêm độ trễ 500ms để tạo hiệu ứng loading
   }, [
     selectedGenres,
     selectedPlatforms,
@@ -131,34 +135,34 @@ const Games = () => {
     selectedPlayers,
     search,
     sortOption,
-  ]);
+  ])
 
-  const totalPages = Math.ceil(filteredGames.length / gamesPerPage);
-  const indexOfLastGame = currentPage * gamesPerPage;
-  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
-  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame);
+  const totalPages = Math.ceil(filteredGames.length / gamesPerPage)
+  const indexOfLastGame = currentPage * gamesPerPage
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage
+  const currentGames = filteredGames.slice(indexOfFirstGame, indexOfLastGame)
 
   const nextPage = () => {
     if (currentPage < totalPages) {
-      setLoading(true);
+      setLoading(true)
       setTimeout(() => {
-        setCurrentPage((prev) => prev + 1);
-        setLoading(false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 500);
+        setCurrentPage((prev) => prev + 1)
+        setLoading(false)
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }, 500)
     }
-  };
+  }
 
   const prevPage = () => {
     if (currentPage > 1) {
-      setLoading(true);
+      setLoading(true)
       setTimeout(() => {
-        setCurrentPage((prev) => prev - 1);
-        setLoading(false);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 500);
+        setCurrentPage((prev) => prev - 1)
+        setLoading(false)
+        window.scrollTo({ top: 0, behavior: "smooth" })
+      }, 500)
     }
-  };
+  }
   return (
     <div className="flex gap-4 mt-[84px] p-4">
       <div className="mt-10">
@@ -240,7 +244,11 @@ const Games = () => {
                     />
 
                     <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
-                      <button title="Add to cart" className="hover:text-white">
+                      <button
+                        title="Add to cart"
+                        className="hover:text-white"
+                        onClick={() => addToCart(game)}
+                      >
                         <i className="fa-solid fa-cart-shopping text-xs"></i>
                       </button>
 
@@ -294,7 +302,7 @@ const Games = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Games;
+export default Games
