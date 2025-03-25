@@ -10,6 +10,7 @@ import GameDetail from "./pages/GameDetail"
 import games from "./data/gameData"
 import Profile from "./pages/Profile"
 import AssetDetail from "./pages/AssetDetail"
+import Checkout from "./pages/Checkout"
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/login" element={<Login gameData={games}/>} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </Router>
