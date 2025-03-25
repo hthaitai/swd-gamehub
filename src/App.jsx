@@ -11,6 +11,7 @@ import games from "./data/gameData";
 import Profile from "./pages/Profile";
 import AssetDetail from "./pages/AssetDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Checkout from "./pages/Checkout"
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </Router>

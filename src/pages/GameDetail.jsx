@@ -11,7 +11,7 @@ const GameDetail = () => {
 
   const [reviews, setReviews] = useState([])
   const [reviewText, setReviewText] = useState("")
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
   const imageUrls = [
     "https://picsum.photos/400/300?random=1",
     "https://picsum.photos/400/300?random=2",
@@ -60,16 +60,16 @@ const GameDetail = () => {
   }
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  },[]);
+      setLoading(false)
+    }, 500)
+  }, [])
 
   if (loading) {
     return (
       <div className="flex justify-center items-center w-full h-screen">
         <span className="loader"></span>
       </div>
-    );
+    )
   }
   return (
     <div className="mt-[84px]">
@@ -114,9 +114,12 @@ const GameDetail = () => {
 
           <p className="text-sm text-gray-300">{game.description}</p>
 
-          <button className="border text-sm p-3 rounded-md bg-white hover:scale-95 transition hover:bg-gray-300 text-black font-medium max-w-[120px] w-full">
+          <a
+            href="http://localhost:5173/checkout"
+            className="border text-sm p-3 rounded-md bg-white hover:scale-95 transition hover:bg-gray-300 text-black font-medium max-w-[120px] w-full"
+          >
             Buy for {game.price}
-          </button>
+          </a>
         </div>
       </div>
 
