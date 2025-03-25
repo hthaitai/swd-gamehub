@@ -145,7 +145,7 @@ const Assets = () => {
         />
       </div>
 
-      <div className="mx-auto">
+      <div className="mx-auto min-h-[260px]">
         <div className="mt-10 flex flex-col gap-8 w-[1200px]">
           <div className="flex justify-end flex-1">
             <SortDropdown
@@ -158,10 +158,12 @@ const Assets = () => {
               <span className="loader"></span>
             </div>
           ) : (
-            <div className="gap-3 grid min-h-[700px]  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="gap-3 grid min-h-[260px]  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
               {currentAssets.map((asset) => (
                 <div key={asset.id}>
                   <div className="relative  group overflow-hidden">
+                  <Link to={`/assets/${asset.id}`}>
+
                     <LazyLoadImage
                       className=" w-[400px] h-[200px] object-cover rounded-md duration-300 group-hover:scale-105"
                       src={
@@ -173,6 +175,8 @@ const Assets = () => {
                       effect="scroll"
                     />
 
+                    </Link>
+                 
                     <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
                       <button title="Add to cart" className="hover:text-white">
                         <i className="fa-solid fa-cart-shopping text-xs"></i>
@@ -195,9 +199,7 @@ const Assets = () => {
                   </div>
 
                   <div className="py-2 w-[300px]">
-                    <Link to={`/assets/${asset.id}`}>
                       <p className="font-medium">{asset.productTitle}</p>
-                    </Link>
                     <p className="text-sm text-gray-300 font-semibold">
                       ${asset.price}
                     </p>

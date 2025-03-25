@@ -1,8 +1,28 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Orb from "../css/backgroundLogin";
+import productService from "../api/productService";
+import { ToastContainer, toast } from "react-toastify";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await productService.login(username, password);
+      console.log("Login data:", data);
+      localStorage.setItem("token", data.result.token);
+      window.dispatchEvent(new Event("tokenChanged")); // 🚀 Thông báo cập nhật UI
+
+      setTimeout(() => navigate("/"), 500);
+    } catch (error) {
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.message || "Login failed");
+    }
+  };
+
   return (
     <div
       style={{
@@ -15,6 +35,7 @@ const Login = () => {
         alignItems: "center",
       }}
     >
+      <ToastContainer />
       <Orb
         hoverIntensity={0.5}
         rotateOnHover={true}
@@ -31,12 +52,14 @@ const Login = () => {
         }}
       >
         <h2 style={{ textAlign: "center" }}>Login</h2>
-        <form>
+
+        <form onSubmit={handleLogin}>
           <div>
-            <label>Email:</label>
+            <label>Username:</label>
             <input
               className="bg-transparent focus:border-white text-white w-full h-10 border-b border-gray-500 focus:outline-none"
-              type="email"
+              type="username"
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
@@ -46,12 +69,12 @@ const Login = () => {
               className="bg-transparent focus:border-white text-white w-full h-10 border-b border-gray-500 focus:outline-none"
               type="password"
               required
-           
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-         <button className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white">
-                Sign in
-              </button>
+          <button className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white">
+            Sign in
+          </button>
         </form>
         <p style={{ textAlign: "center", marginTop: "10px" }}>
           Don't have an account? <Link to="/register">Sign up</Link>

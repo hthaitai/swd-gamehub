@@ -76,10 +76,10 @@ function AssetDetail() {
                   {asset.images.map((img, index) => (
                     <img
                       key={index}
-                      className={`w-[100px] h-[80px] cursor-pointer transition ${
+                      className={`w-[100px] h-[80px]  transition ${
                         selectedImage === img.imageUrl
                           ? "border-2 border-white"
-                          : ""
+                          : "cursor-pointer"
                       }`}
                       src={img.imageUrl}
                       alt={`Image ${index}`}
