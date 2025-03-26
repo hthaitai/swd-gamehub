@@ -33,8 +33,6 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetail />} />
-          <Route path="/assets" element={<Assets />} />
-          <Route path="/assets/:id" element={<AssetDetail />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
@@ -43,6 +41,22 @@ function App() {
             element={
               <ProtectedRoute allowedRoles={["USER", "ADMIN"]}>
                 <Checkout />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assets"
+            element={
+              <ProtectedRoute allowedRoles={["DEVELOPER", "DESIGNER", "ADMIN"]}>
+                <Assets />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/assets/:id"
+            element={
+              <ProtectedRoute allowedRoles={["DEVELOPER", "DESIGNER"]}>
+                <AssetDetail />
               </ProtectedRoute>
             }
           />

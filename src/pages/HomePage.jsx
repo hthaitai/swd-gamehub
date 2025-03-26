@@ -9,8 +9,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
 import productService from "../api/productService";
+import { jwtDecode } from "jwt-decode";
 
 const HomePage = () => {
   const totalGames = gameData.length;
@@ -18,7 +18,20 @@ const HomePage = () => {
   const [assets, setAssets] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsPerPage = 6;
+  const [userRole, setUserRole] = useState(null);
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken)
+        setUserRole(decodedToken.role);
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
   useEffect(() => {
     productService
       .getProduct()
@@ -150,6 +163,8 @@ const HomePage = () => {
             </div>
           ))}
       </div>
+      {(userRole === "DEVELOPER" || userRole === "DESIGNER") && (
+
       <div className="game-box-popular">
         <div className="w-11/12 flex  h-full ">
           {/* <div className="w-7/12 bg-blue-400 h-full">
@@ -164,45 +179,48 @@ a
             </p>
           </div>
         </div>
-      </div>
-      <div className="asset-box-popular">
-        <div className="w-10/12 h-5/6">
-          <div className="flex justify-between mb-4 items-center">
-            <h1 className="asset-title">Best Assets</h1>
-            <button className="asset-list-button">
-              <Link to="/assets" className="flex items-center gap-3">
-                <span>View all assets</span>
-                <i className="fa-solid fa-chevron-right"></i>
-              </Link>
-            </button>
-          </div>
-          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-            {shuffledAssets.slice(0, 8).map((asset) => (
-              <div key={asset.id}>
-                <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
-                  <button className="w-full h-full object-cover rounded-md transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]">
-                    <Link to={`/assets/${asset.id}`}>
-                      <LazyLoadImage
-                        className=""
-                        src={
-                          asset.images?.[1]?.imageUrl ||
-                          "https://via.placeholder.com/300"
-                        }
-                        alt="Asset"
-                        effect="blur"
-                      />
-                    </Link>
-                  </button>
+      </div>      )}
+
+      {(userRole === "DEVELOPER" || userRole === "DESIGNER") && (
+        <div className="asset-box-popular">
+          <div className="w-10/12 h-5/6">
+            <div className="flex justify-between mb-4 items-center">
+              <h1 className="asset-title">Best Assets</h1>
+              <button className="asset-list-button">
+                <Link to="/assets" className="flex items-center gap-3">
+                  <span>View all assets</span>
+                  <i className="fa-solid fa-chevron-right"></i>
+                </Link>
+              </button>
+            </div>
+            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+              {shuffledAssets.slice(0, 8).map((asset) => (
+                <div key={asset.id}>
+                  <div className="relative max-w-[400px] h-[200px] group overflow-hidden">
+                    <button className="w-full h-full object-cover rounded-md transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.08]">
+                      <Link to={`/assets/${asset.id}`}>
+                        <LazyLoadImage
+                          className=""
+                          src={
+                            asset.images?.[1]?.imageUrl ||
+                            "https://via.placeholder.com/300"
+                          }
+                          alt="Asset"
+                          effect="blur"
+                        />
+                      </Link>
+                    </button>
+                  </div>
+                  <div className="py-2 w-[300px]">
+                    <p className="font-medium">{asset.productTitle}</p>
+                    <p className="text-sm text-gray-300">${asset.price}</p>
+                  </div>
                 </div>
-                <div className="py-2 w-[300px]">
-                  <p className="font-medium">{asset.productTitle}</p>
-                  <p className="text-sm text-gray-300">${asset.price}</p>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
