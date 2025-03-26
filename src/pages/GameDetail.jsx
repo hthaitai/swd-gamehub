@@ -96,7 +96,7 @@ const GameDetail = () => {
             </div>
 
             <button
-              className="max-w-[135px] h-[32px] bg-white text-black font-medium rounded-[5px] mt-[16px] hover:opacity-75"
+              className="max-w-[135px] h-[32px] bg-white text-black font-medium rounded-[5px] mt-[32px] hover:opacity-75"
               onClick={() => {
                 addToCart(game)
                 window.location.href = "/checkout"

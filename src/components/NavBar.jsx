@@ -1,62 +1,61 @@
-import React, { useState, useEffect } from "react";
-import { NavLink, Link, useNavigate } from "react-router-dom";
-import { CircleUserRound, Menu, X } from "lucide-react";
-import { jwtDecode } from "jwt-decode";
-import productService from "../api/productService";
+import React, { useState, useEffect } from "react"
+import { NavLink, Link, useNavigate, Links } from "react-router-dom"
+import { CircleUserRound, Menu, X } from "lucide-react"
+import { jwtDecode } from "jwt-decode"
+import productService from "../api/productService"
 
 const NavBar = () => {
-  const navigate = useNavigate();
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [profile, setProfile] = useState("");
-  const [tokendecoded, setTokendecoded] = useState("");
-  const [isProfileOpen, setIsProfileOpen] = useState(false); // State quản lý popup
+  const navigate = useNavigate()
+  const [token, setToken] = useState(localStorage.getItem("token"))
+  const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [profile, setProfile] = useState("")
+  const [tokendecoded, setTokendecoded] = useState("")
+  const [isProfileOpen, setIsProfileOpen] = useState(false) // State quản lý popup
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    window.dispatchEvent(new Event("tokenChanged")); // 🚀 Gửi sự kiện cập nhật
-    navigate("/login");
-  };
+    localStorage.removeItem("token")
+    window.dispatchEvent(new Event("tokenChanged")) // 🚀 Gửi sự kiện cập nhật
+    navigate("/login")
+  }
 
   const handleProfile = () => {
     productService
       .getUserById(tokendecoded.userId)
       .then((res) => {
-        setProfile(res);
-        setIsProfileOpen(true);
+        setProfile(res)
+        setIsProfileOpen(true)
       })
       .catch((error) => {
-        console.error("Error fetching profile:", error);
-      });
-  };
+        console.error("Error fetching profile:", error)
+      })
+  }
 
   useEffect(() => {
     const updateToken = () => {
-      setToken(localStorage.getItem("token"));
-    };
+      setToken(localStorage.getItem("token"))
+    }
 
-    window.addEventListener("tokenChanged", updateToken); // 🛠 Lắng nghe sự kiện
-    return () => window.removeEventListener("tokenChanged", updateToken);
-  }, []);
+    window.addEventListener("tokenChanged", updateToken) // 🛠 Lắng nghe sự kiện
+    return () => window.removeEventListener("tokenChanged", updateToken)
+  }, [])
   useEffect(() => {
     if (token) {
       try {
-        const decodedToken = jwtDecode(token);
-        setTokendecoded(decodedToken);
+        const decodedToken = jwtDecode(token)
+        setTokendecoded(decodedToken)
       } catch (error) {
-        console.error("Invalid token", error);
+        console.error("Invalid token", error)
       }
     }
-  }, [token]);
+  }, [token])
   return (
     <nav className="navbar bg-[#0F0F0F]">
       <a href="/">
-      <h1 className="logo">
-        <span className="bold">Game</span> | Hub
-      </h1>
-
+        <h1 className="logo">
+          <span className="bold">Game</span> | Hub
+        </h1>
       </a>
-   
+
       <ul className="navbar-list">
         <li className="navbar-item">
           <NavLink
@@ -107,8 +106,8 @@ const NavBar = () => {
               </div>
               <button
                 onClick={() => {
-                  handleProfile();
-                  setDropdownOpen(false);
+                  handleProfile()
+                  setDropdownOpen(false)
                 }}
                 className="block w-full text-left px-4 py-2 hover:bg-gray-500"
               >
@@ -117,10 +116,11 @@ const NavBar = () => {
               <button className="block w-full text-left px-4 py-2 hover:bg-gray-500">
                 Settings
               </button>
+              <Link to="/dashboard">Dashboard</Link>
               <button
                 onClick={() => {
-                  handleLogout();
-                  setDropdownOpen(false);
+                  handleLogout()
+                  setDropdownOpen(false)
                 }}
                 className="block w-full text-left px-4 py-2 hover:bg-red-500"
               >
@@ -172,7 +172,7 @@ const NavBar = () => {
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default NavBar;
+export default NavBar
