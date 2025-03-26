@@ -50,9 +50,13 @@ const NavBar = () => {
   }, [token]);
   return (
     <nav className="navbar bg-[#0F0F0F]">
+      <a href="/">
       <h1 className="logo">
         <span className="bold">Game</span> | Hub
       </h1>
+
+      </a>
+   
       <ul className="navbar-list">
         <li className="navbar-item">
           <NavLink
@@ -74,18 +78,20 @@ const NavBar = () => {
             Games
           </NavLink>
         </li>
-        <li className="navbar-item">
-          <NavLink
-            to="/assets"
-            className={({ isActive }) =>
-              isActive ? "navbar-link active" : "navbar-link"
-            }
-          >
-            Assets
-          </NavLink>
-        </li>
+        {tokendecoded?.role === "DEVELOPER" ||
+        tokendecoded?.role === "DESIGNER" ? (
+          <li className="navbar-item">
+            <NavLink
+              to="/assets"
+              className={({ isActive }) =>
+                isActive ? "navbar-link active" : "navbar-link"
+              }
+            >
+              Assets
+            </NavLink>
+          </li>
+        ) : null}
       </ul>
-
       {token ? (
         <div className="relative">
           <button
@@ -97,9 +103,8 @@ const NavBar = () => {
           {dropdownOpen && (
             <div className="absolute bg-black bg-opacity-60 right-0 mt-2 w-48 shadow-lg rounded-lg py-2">
               <div className="px-4 py-2 border-b text-sm font-semibold">
-                {tokendecoded?.username || "User"}
+                {tokendecoded?.username || "User"} ({tokendecoded?.role})
               </div>
-
               <button
                 onClick={() => {
                   handleProfile();

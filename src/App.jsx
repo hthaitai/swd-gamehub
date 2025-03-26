@@ -11,29 +11,37 @@ import games from "./data/gameData";
 import Profile from "./pages/Profile";
 import AssetDetail from "./pages/AssetDetail";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Checkout from "./pages/Checkout"
+import Checkout from "./pages/Checkout";
+import AuthRoute from "./components/AuthRoute";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route
+            path="/login"
+            element={
+              <AuthRoute>
+                <Login />
+              </AuthRoute>
+            }
+          />
           <Route index element={<HomePage />} />
           <Route path="/games" element={<Games />} />
           <Route path="/games/:id" element={<GameDetail />} />
           <Route path="/assets" element={<Assets />} />
           <Route path="/assets/:id" element={<AssetDetail />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<Profile />} />
           <Route
-            path="/login"
+            path="/checkout"
             element={
-              <ProtectedRoute>
-                <Login />
+              <ProtectedRoute allowedRoles={["USER","ADMIN"] }>
+                <Checkout />
               </ProtectedRoute>
             }
           />
-          <Route path="/register" element={<Register />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/checkout" element={<Checkout />} />
         </Route>
       </Routes>
     </Router>
