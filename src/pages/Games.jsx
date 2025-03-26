@@ -16,7 +16,7 @@ const Games = () => {
   const gamesPerPage = 12
   const [loading, setLoading] = useState(false)
   const [wishlist, toggleWishlist] = useState([])
-  const [filteredGames, setFilteredGames] = useState(gameData)
+  const [filteredGames, setFilteredGames] = useState([])
   const [selectedGenres, setSelectedGenres] = useState([])
   const [selectedPlatforms, setSelectedPlatforms] = useState([])
   const [selectedPrices, setSelectedPrices] = useState([])
@@ -78,6 +78,7 @@ const Games = () => {
       productService
         .getProduct()
         .then((response) => {
+          console.log("Fetched products:", response.data);
           let filtered = response.data.filter((game) => game.category.id === 1) // Lọc game
 
           if (search.trim() !== "") {
