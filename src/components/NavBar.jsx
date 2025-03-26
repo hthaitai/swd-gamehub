@@ -10,7 +10,6 @@ const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [profile, setProfile] = useState("");
   const [tokendecoded, setTokendecoded] = useState("");
-  const [isProfileOpen, setIsProfileOpen] = useState(false); // State quản lý popup
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -19,17 +18,8 @@ const NavBar = () => {
   };
 
   const handleProfile = () => {
-    productService
-      .getUserById(tokendecoded.userId)
-      .then((res) => {
-        setProfile(res);
-        setIsProfileOpen(true);
-      })
-      .catch((error) => {
-        console.error("Error fetching profile:", error);
-      });
+    navigate(`/profile`);
   };
-
   useEffect(() => {
     const updateToken = () => {
       setToken(localStorage.getItem("token"));
@@ -51,12 +41,11 @@ const NavBar = () => {
   return (
     <nav className="navbar bg-[#0F0F0F]">
       <a href="/">
-      <h1 className="logo">
-        <span className="bold">Game</span> | Hub
-      </h1>
-
+        <h1 className="logo">
+          <span className="bold">Game</span> | Hub
+        </h1>
       </a>
-   
+
       <ul className="navbar-list">
         <li className="navbar-item">
           <NavLink
@@ -79,7 +68,8 @@ const NavBar = () => {
           </NavLink>
         </li>
         {tokendecoded?.role === "DEVELOPER" ||
-        tokendecoded?.role === "DESIGNER" ? (
+        tokendecoded?.role === "DESIGNER" ||
+        tokendecoded?.role === "ADMIN" ? (
           <li className="navbar-item">
             <NavLink
               to="/assets"
@@ -114,9 +104,7 @@ const NavBar = () => {
               >
                 Profile
               </button>
-              <button className="block w-full text-left px-4 py-2 hover:bg-gray-500">
-                Settings
-              </button>
+
               <button
                 onClick={() => {
                   handleLogout();
@@ -139,37 +127,6 @@ const NavBar = () => {
             <span className="relative z-10">Sign in</span>
           </button>
         </Link>
-      )}
-
-      {/* Popup Profile */}
-      {isProfileOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-black bg-opacity-80 p-6 rounded-lg shadow-lg h-[500px] w-[500px] relative">
-            <button
-              className="absolute top-2 right-2"
-              onClick={() => setIsProfileOpen(false)}
-            >
-              <X size={20} />
-            </button>
-            <div></div>
-            <h2 className=" text-lg font-bold mb-4">User Profile</h2>
-            {profile ? (
-              <div className="text-center">
-                <p>
-                  <strong>Username:</strong> {profile.username || "N/A"}
-                </p>
-                <p>
-                  <strong>Email:</strong> {profile.email || "N/A"}
-                </p>
-                <p>
-                  <strong>Role:</strong> {profile.roles || "User"}
-                </p>
-              </div>
-            ) : (
-              <p>Loading profile...</p>
-            )}
-          </div>
-        </div>
       )}
     </nav>
   );

@@ -58,7 +58,7 @@ const Login = () => {
             <label>Username:</label>
             <input
               className="bg-transparent focus:border-white text-white w-full h-10 border-b border-gray-500 focus:outline-none"
-              type="username"
+              type="text"
               onChange={(e) => setUsername(e.target.value)}
               required
             />
@@ -72,7 +72,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white">
+          <button type="submit" className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white">
             Sign in
           </button>
         </form>

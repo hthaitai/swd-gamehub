@@ -9,7 +9,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
 import productService from "../api/productService";
 import { jwtDecode } from "jwt-decode";
 

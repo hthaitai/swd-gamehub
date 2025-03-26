@@ -1,5 +1,8 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import accountData from "../data/accountData";
+import productService from "../api/productService";
+import { jwtDecode } from "jwt-decode";
+
 function Profile() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -8,7 +11,8 @@ function Profile() {
   const accountSignInRef = useRef(null);
   const personalInfoRef = useRef(null);
   const paymentHistoryRef = useRef(null);
-
+  const [tokenUser, setTokenUser] = useState("");
+  const [user, setUser] = useState({});
   const isValid =
     currentPassword &&
     newPassword &&
@@ -29,11 +33,36 @@ function Profile() {
       });
     }
   };
-  // Giả sử user đang đăng nhập là người có id = 1 (Có thể thay bằng localStorage hoặc context)
+  const handleProfile = () => {
+    productService
+      .getUserById(tokenUser)
+      .then((res) => {
+        setUser(res);
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error("Error fetching profile:", error);
+      });
+  };
 
-  const loggedInUserId = 2;
-  const user = accountData.find((acc) => acc.id === loggedInUserId) || {};
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      try {
+        const decodedToken = jwtDecode(token);
+        console.log(decodedToken);
+        setTokenUser(decodedToken.userId);
+      } catch (error) {
+        console.error("Invalid token", error);
+      }
+    }
+  }, []);
 
+  useEffect(() => {
+    if (tokenUser) {
+      handleProfile();
+    }
+  }, [tokenUser]);
   return (
     <div className="flex items-start justify-center mt-[150px]">
       {/* Sidebar */}
@@ -91,38 +120,27 @@ function Profile() {
           <div className="w-[640px] bg-[#292727]">
             <div className="m-24 flex flex-col">
               <div>
-                <h1 className="font-bold">Name</h1>
-                <p className="w-[400px] mt-2 bg-[#383636]  p-3 rounded-md text-gray-200 focus:outline-none">
-                  {user.name || "N/A"}
-                </p>
-              </div>
-              <div>
                 <h1 className="mt-2 font-bold">Username</h1>
                 <p className="w-[400px] mt-2 bg-[#383636]  p-3 rounded-md text-gray-200 focus:outline-none">
-                  {user.username || "N/A"}
+                  {user.username}
                 </p>
               </div>
               <div>
                 <h1 className="mt-2 font-bold">Email</h1>
                 <p className="w-[400px] mt-2 bg-[#383636]  p-3 rounded-md text-gray-200 focus:outline-none">
-                  {user.email || "N/A"}{" "}
+                  {user.email}
                 </p>
               </div>
               <div>
                 <h1 className="mt-2 font-bold">User Type</h1>
                 <p className="w-[400px] mt-2 bg-[#383636]  p-3 rounded-md text-gray-200 focus:outline-none">
-                  {user.role || "N/A"}
+                  {user.roles}
                 </p>
               </div>
               <div>
                 <h1 className="mt-2 font-bold">Created Account Date</h1>
                 <p className="w-[400px] mt-2 bg-[#383636]  p-3 rounded-md text-gray-200 focus:outline-none">
-                  {user.createdAt
-                    ? new Date(user.createdAt).toLocaleString("vi-VN", {
-                        timeZone: "Asia/Ho_Chi_Minh",
-                        hour12: false,
-                      })
-                    : "N/A"}{" "}
+                  {user.create_at}
                 </p>
               </div>
             </div>
