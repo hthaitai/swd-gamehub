@@ -7,8 +7,9 @@ const SideBar = () => {
       <nav className="flex flex-col mt-[30px] mx-[20px] w-[280px] gap-[4px]">
         {[
           { to: "/dashboard", label: "Dashboard", exact: true },
-          { to: "/dashboard/upload-game", label: "Upload a Game" },
-          { to: "/games", label: "Games" },
+          { to: "/dashboard/upload-game", label: "Upload Product" },
+          { to: "/dashboard/update-game", label: "Update Product" },
+          { to: "/", label: "Home" },
         ].map(({ to, label, exact }) => (
           <NavLink
             key={to}

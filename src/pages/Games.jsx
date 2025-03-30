@@ -34,21 +34,6 @@ const Games = () => {
     setSortOption(option)
   }
 
-  const handleGenreSelect = (option) => {
-    setSelectedGenres((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option]
-    )
-  }
-
-  const handlePlatformSelect = (option) => {
-    setSelectedPlatforms((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option]
-    )
-  }
 
   const handlePriceSelect = (option) => {
     setSelectedPrices((prev) =>
@@ -58,13 +43,6 @@ const Games = () => {
     )
   }
 
-  const handlePlayerSelect = (option) => {
-    setSelectedPlayers((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option]
-    )
-  }
 
   const clearFilters = () => {
     setSelectedGenres([])
@@ -73,70 +51,46 @@ const Games = () => {
     setSelectedPlayers([])
   }
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     setTimeout(() => {
       productService
         .getProduct()
         .then((response) => {
           console.log("Fetched products:", response.data);
-          let filtered = response.data.filter((game) => game.category.id === 1) // Lọc game
-
+          let filtered = response.data.filter((game) => game.category.id === 1); // Lọc game
+  
           if (search.trim() !== "") {
             filtered = filtered.filter((game) =>
-              game.title.toLowerCase().includes(search.toLowerCase())
-            )
+              game.productTitle.toLowerCase().includes(search.toLowerCase())
+            );
           }
-
-          if (selectedGenres.length > 0) {
-            filtered = filtered.filter((game) =>
-              selectedGenres.includes(game.genre)
-            )
-          }
-
-          if (selectedPlatforms.length > 0) {
-            filtered = filtered.filter((game) =>
-              selectedPlatforms.includes(game.platform)
-            )
-          }
-
+  
           if (selectedPrices.length > 0) {
             filtered = filtered.filter((game) =>
               selectedPrices.includes(game.price === 0 ? "Free" : "Paid")
-            )
+            );
           }
-
-          if (selectedPlayers.length > 0) {
-            filtered = filtered.filter((game) =>
-              selectedPlayers.includes(game.playerSupport)
-            )
-          }
-
+  
           if (sortOption === "New Release") {
             filtered = filtered.sort(
               (a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)
-            )
+            );
           } else if (sortOption === "New Upload") {
             filtered = filtered.sort(
               (a, b) => new Date(b.createAt) - new Date(a.createAt)
-            )
+            );
           }
-          setFilteredGames(filtered)
-          setCurrentPage(1)
-          setLoading(false)
+  
+          setFilteredGames(filtered);
+          setCurrentPage(1);
+          setLoading(false);
         })
         .catch((error) => {
-          console.error("Lỗi khi tải dữ liệu game:", error)
-          setLoading(false)
-        })
-    }, 500) // Thêm độ trễ 500ms để tạo hiệu ứng loading
-  }, [
-    selectedGenres,
-    selectedPlatforms,
-    selectedPrices,
-    selectedPlayers,
-    search,
-    sortOption,
-  ])
+          console.error("Lỗi khi tải dữ liệu game:", error);
+          setLoading(false);
+        });
+    }, 500); // Thêm độ trễ 500ms để tạo hiệu ứng loading
+  }, [selectedPrices, search, sortOption]);
 
   const totalPages = Math.ceil(filteredGames.length / gamesPerPage)
   const indexOfLastGame = currentPage * gamesPerPage
@@ -190,30 +144,14 @@ const Games = () => {
           )}
         </div>
 
-        <FilterDropdown
-          label="Genres"
-          options={genreOptions}
-          onSelect={handleGenreSelect}
-          selectedOptions={selectedGenres}
-        />
-        <FilterDropdown
-          label="Platform"
-          options={platformOptions}
-          onSelect={handlePlatformSelect}
-          selectedOptions={selectedPlatforms}
-        />
+      
         <FilterDropdown
           label="Price"
           options={priceOptions}
           onSelect={handlePriceSelect}
           selectedOptions={selectedPrices}
         />
-        <FilterDropdown
-          label="Player"
-          options={playerOptions}
-          onSelect={handlePlayerSelect}
-          selectedOptions={selectedPlayers}
-        />
+   
       </div>
 
       <div className="mx-auto">

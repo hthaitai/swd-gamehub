@@ -25,7 +25,7 @@ const HomePage = () => {
     if (token) {
       try {
         const decodedToken = jwtDecode(token);
-        console.log(decodedToken)
+        console.log(decodedToken);
         setUserRole(decodedToken.role);
       } catch (error) {
         console.error("Invalid token", error);
@@ -164,22 +164,22 @@ const HomePage = () => {
           ))}
       </div>
       {(userRole === "DEVELOPER" || userRole === "DESIGNER") && (
-
-      <div className="game-box-popular">
-        <div className="w-11/12 flex  h-full ">
-          {/* <div className="w-7/12 bg-blue-400 h-full">
+        <div className="game-box-popular">
+          <div className="w-11/12 flex  h-full ">
+            {/* <div className="w-7/12 bg-blue-400 h-full">
 a
           </div> */}
-          <div className="w-full h-full animate-scroll bg-cover flex flex-col items-center justify-center p-6 text-white bg-center">
-            <h1 className="text-6xl font-bold ">Sell & Buy Game Assets</h1>
-            <p className="mt-2 text-xl text-center">
-              Discover high-quality game assets for Unity, from 3D models to
-              textures, animations, and UI elements. Start building your dream
-              game today!
-            </p>
+            <div className="w-full h-full animate-scroll bg-cover flex flex-col items-center justify-center p-6 text-white bg-center">
+              <h1 className="text-6xl font-bold ">Sell & Buy Game Assets</h1>
+              <p className="mt-2 text-xl text-center">
+                Discover high-quality game assets for Unity, from 3D models to
+                textures, animations, and UI elements. Start building your dream
+                game today!
+              </p>
+            </div>
           </div>
         </div>
-      </div>      )}
+      )}
 
       {(userRole === "DEVELOPER" || userRole === "DESIGNER") && (
         <div className="asset-box-popular">

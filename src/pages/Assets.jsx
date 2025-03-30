@@ -8,7 +8,6 @@ import productService from "../api/productService";
 
 const Assets = () => {
   const priceOptions = ["Free", "Paid"];
-  const typeOptions = ["2D", "3D"];
   const [wishlist, toggleWishlist] = useState([]);
   const [filteredAssets, setFilteredAssets] = useState(assetData);
   const [selectedPrices, setSelectedPrices] = useState([]);
@@ -33,13 +32,7 @@ const Assets = () => {
         : [...prev, option]
     );
   };
-  const handleTypeSelect = (option) => {
-    setSelectedType((prev) =>
-      prev.includes(option)
-        ? prev.filter((item) => item !== option)
-        : [...prev, option]
-    );
-  };
+
 
   const totalPages = Math.ceil(filteredAssets.length / assetsPerPage);
   const indexOfLastAsset = currentPage * assetsPerPage;
@@ -78,14 +71,14 @@ const Assets = () => {
     setLoading(true);
     setTimeout(() => {
       productService.getProduct().then((response) => {
-        let filtered = response.data.filter((asset) => asset.category.id === 2); // Lọc game
-
+        let filtered = response.data.filter((asset) => asset.category.id === 2); // Lọc assets
+  
         if (search.trim() !== "") {
           filtered = filtered.filter((asset) =>
-            asset.title.toLowerCase().includes(search.toLowerCase())
+            asset.productTitle.toLowerCase().includes(search.toLowerCase())
           );
         }
-
+  
         if (selectedPrices.length > 0) {
           filtered = filtered.filter((asset) =>
             selectedPrices.includes(asset.price === 0 ? "Free" : "Paid")
@@ -105,8 +98,7 @@ const Assets = () => {
         setLoading(false);
       });
     }, 500);
-  }, [selectedPrices, search, sortOption, selectedType]);
-
+  }, [selectedPrices, search, sortOption]);
   return (
     <div className="flex mt-[84px]">
       <div className="mt-10 px-4">
@@ -136,13 +128,6 @@ const Assets = () => {
           onSelect={handlePriceSelect}
           selectedOptions={selectedPrices}
         />
-
-        <FilterDropdown
-          label="Type"
-          options={typeOptions}
-          onSelect={handleTypeSelect}
-          selectedOptions={selectedType}
-        />
       </div>
 
       <div className="mx-auto min-h-[260px]">
@@ -162,21 +147,19 @@ const Assets = () => {
               {currentAssets.map((asset) => (
                 <div key={asset.id}>
                   <div className="relative  group overflow-hidden">
-                  <Link to={`/assets/${asset.id}`}>
-
-                    <LazyLoadImage
-                      className=" w-[400px] h-[200px] object-cover rounded-md duration-300 group-hover:scale-105"
-                      src={
-                        asset.images && asset.images.length > 0
-                          ? asset.images[0].imageUrl
-                          : "https://via.placeholder.com/300"
-                      }
-                      alt="Asset"
-                      effect="scroll"
-                    />
-
+                    <Link to={`/assets/${asset.id}`}>
+                      <LazyLoadImage
+                        className=" w-[400px] h-[200px] object-cover rounded-md duration-300 group-hover:scale-105"
+                        src={
+                          asset.images && asset.images.length > 0
+                            ? asset.images[0].imageUrl
+                            : "https://via.placeholder.com/300"
+                        }
+                        alt="Asset"
+                        effect="scroll"
+                      />
                     </Link>
-                 
+
                     <div className="opacity-0 group-hover:opacity-100 duration-300 absolute top-0 right-0 flex gap-2 m-2 p-[1px_4px] rounded-md text-gray-300 bg-black/50">
                       <button title="Add to cart" className="hover:text-white">
                         <i className="fa-solid fa-cart-shopping text-xs"></i>
@@ -199,7 +182,7 @@ const Assets = () => {
                   </div>
 
                   <div className="py-2 w-[300px]">
-                      <p className="font-medium">{asset.productTitle}</p>
+                    <p className="font-medium">{asset.productTitle}</p>
                     <p className="text-sm text-gray-300 font-semibold">
                       ${asset.price}
                     </p>

@@ -16,6 +16,7 @@ import AuthRoute from "./components/AuthRoute"
 import Dashboard from "./pages/Dashboard"
 import DashboardLayout from "./pages/DashboardLayout"
 import UploadGame from "./pages/UploadGame"
+import UpdateGame from "./pages/UpdateGame"
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
           <Route path="upload-game" element={<UploadGame />} />
+          <Route path="update-game" element={<UpdateGame />} />
         </Route>
       </Routes>
     </Router>

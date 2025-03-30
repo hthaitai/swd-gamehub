@@ -19,6 +19,9 @@ const Login = () => {
       setTimeout(() => navigate("/"), 500);
     } catch (error) {
       console.error("Login error:", error);
+      setTimeout(() => {
+        
+      }, 15000);
       toast.error(error.response?.data?.message || "Login failed");
     }
   };
@@ -72,7 +75,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-          <button type="submit" className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white">
+          <button
+            type="submit"
+            className="mt-4 bg-white items-center text-black font-bold text-sm w-32 h-10 rounded-full hover:bg-gray-700 hover:text-white border border-transparent hover:border-white"
+          >
             Sign in
           </button>
         </form>
